@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المستخدمين - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.1);
+        }
+
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .add-user-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-user-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .users-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .users-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px 40px;
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .users-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .users-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .users-table-container {
+            padding: 40px;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .users-table th {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 15px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .users-table th:first-child {
+            border-radius: 0 0 0 0;
+        }
+
+        .users-table th:last-child {
+            border-radius: 0 0 0 0;
+        }
+
+        .users-table td {
+            padding: 20px 15px;
+            color: #333;
+            font-size: 15px;
+            background: white;
+            transition: background 0.3s ease;
+        }
+
+        .users-table tr:hover td {
+            background: rgba(106, 113, 216, 0.02);
+        }
+
+        .users-table tr:nth-child(even) td {
+            background: rgba(248, 250, 252, 0.5);
+        }
+
+        .users-table tr:nth-child(even):hover td {
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .user-id {
+            font-weight: 600;
+            color: #6a71d8;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .user-role-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .role-admin {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .role-user {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .questions-count {
+            font-weight: 600;
+            color: #059669;
+            text-align: center;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .delete-btn:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6a71d8;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6a71d8;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #fecaca;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #bbf7d0;
+        }
+
+        .no-users {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-users-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .modal-message {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-confirm {
+            background: #ef4444;
+            color: white;
+        }
+
+        .modal-btn-cancel {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .navbar-container {
+                padding: 0 20px;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 25px 20px;
+            }
+
+            .users-table-container {
+                padding: 20px;
+                overflow-x: auto;
+            }
+
+            .users-table {
+                min-width: 600px;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+
+                    <div class="user-role" id="userRole">مدير</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link"> الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="subject.html" class="nav-link"> المواد</a>
+                </li>
+                <li class="nav-item">
+                    <a href="users.html" class="nav-link"> إدارة المستخدمين</a>
+                </li>
+                <li class="nav-item">
+                    <a href="units.html" class="nav-link"> إدارة الوحدات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="lessons.html" class="nav-link"> إدارة الدروس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="main-topics.html" class="nav-link"> التصنيفات الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="sub-topics.html" class="nav-link"> التصنيفات الفرعية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="create_questions.html" class="nav-link active"> إنشاء سؤال</a>
+                </li>
+                <li class="nav-item">
+                    <a href="list.html" class="nav-link"> عرض الأسئلة</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">إدارة المستخدمين</h1>
+                <p class="page-subtitle"></p>
+            </div>
+            <a href="register.html" class="add-user-btn">
+                إضافة مستخدم جديد
+            </a>
+        </div>
+
+        <div id="messagesContainer"></div>
+
+        <div class="users-container">
+            <div class="users-table-container">
+                <div id="loadingContainer" class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>جاري تحميل المستخدمين...</p>
+                </div>
+
+                <div id="usersTableContainer" style="display: none;">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>الرقم</th>
+                                <th>الاسم</th>
+                                <th>اسم المستخدم</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>الدور</th>
+                                <th>عدد الأسئلة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- سيتم ملؤها بالبيانات -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="noUsersContainer" class="no-users" style="display: none;">
+                    <div class="no-users-icon"></div>
+                    <h3>لا يوجد مستخدمون</h3>
+                    <p>لم يتم العثور على أي مستخدمين في النظام</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- مودال تأكيد الحذف -->
+    <div id="confirmationModal" class="confirmation-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">⚠️ تأكيد الحذف</h3>
+            <p class="modal-message" id="modalMessage">هل أنت متأكد من حذف هذا المستخدم؟ هذا الإجراء لا يمكن التراجع
+                عنه.</p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModal()">إلغاء</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmDelete()">حذف</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+        let currentUser = null;
+        let userToDelete = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            loadUsers();
+        });
+
+        function checkAuth() {
+            const userData = sessionStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                if (currentUser.role !== 'Admin') {
+                    alert('ليس لديك صلاحية للوصول لهذه الصفحة');
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+                document.getElementById('userRole').textContent = 'مدير';
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        async function loadUsers() {
+            showLoading();
+            try {
+                const response = await fetch(`${API_URL}/users`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayUsers(data.users);
+                } else {
+                    showError('فشل في تحميل المستخدمين: ' + (data.message || 'خطأ غير معروف'));
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل المستخدمين:', error);
+                showError('خطأ في الاتصال بالخادم');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function displayUsers(users) {
+            const tbody = document.getElementById('usersTableBody');
+            const tableContainer = document.getElementById('usersTableContainer');
+            const noUsersContainer = document.getElementById('noUsersContainer');
+
+            if (!users || users.length === 0) {
+                tableContainer.style.display = 'none';
+                noUsersContainer.style.display = 'block';
+                return;
+            }
+
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td class="user-id">#${user.id}</td>
+                    <td class="user-name">${user.name}</td>
+                    <td>${user.username || 'غير محدد'}</td>
+                    <td>${user.email || 'غير محدد'}</td>
+                    <td>
+                        <span class="user-role-badge ${user.role === 'Admin' ? 'role-admin' : 'role-user'}">
+                            ${user.role === 'Admin' ? 'مدير' : 'مستخدم'}
+                        </span>
+                    </td>
+                    <td class="questions-count">${user.questions_count || 0}</td>
+                    <td style="display: inline-flex;">
+                        <button 
+                            class="delete-btn"
+                            onclick="deleteUser(${user.id}, '${user.name}', ${user.questions_count || 0})"
+                            ${user.id === currentUser.id ? 'disabled title="لا يمكن حذف حسابك الخاص"' : ''}
+                            ${(user.questions_count || 0) > 0 ? 'disabled title="لا يمكن حذف مستخدم لديه أسئلة"' : ''}>
+                            🗑️ حذف
+                        </button>
+                        
+                        ${(user.questions_count || 0) > 0 ? `
+                            <button 
+                                style="
+                                    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                                    color: white;
+                                    border: none;
+                                    padding: 8px 16px;
+                                    border-radius: 8px;
+                                    font-size: 12px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    margin-right: 8px;
+                                "
+                                onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 15px rgba(59, 130, 246, 0.4)'"
+                                onmouseout="this.style.transform=''; this.style.boxShadow=''"
+                                onclick="viewUserQuestions(${user.id}, '${user.name}')">
+                                 الأسئلة
+                            </button>
+                        ` : ''}
+                    </td>
+                </tr>
+            `).join('');
+
+            tableContainer.style.display = 'block';
+            noUsersContainer.style.display = 'none';
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return 'غير محدد';
+
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function deleteUser(userId, userName, questionsCount) {
+            // التحقق من عدم إمكانية حذف المستخدم الحالي
+            if (userId === currentUser.id) {
+                showError('لا يمكنك حذف حسابك الخاص');
+                return;
+            }
+
+            // التحقق من وجود أسئلة للمستخدم
+            if (questionsCount > 0) {
+                showError('لا يمكن حذف مستخدم لديه أسئلة. يجب حذف جميع أسئلته أولاً.');
+                return;
+            }
+
+            // تأكيد الحذف
+            userToDelete = userId;
+            document.getElementById('modalMessage').textContent =
+                `هل أنت متأكد من حذف المستخدم "${userName}"؟ هذا الإجراء لا يمكن التراجع عنه.`;
+            document.getElementById('confirmationModal').style.display = 'flex';
+        }
+
+        function viewUserQuestions(userId, userName) {
+            // حفظ معرف المستخدم واسمه في sessionStorage للصفحة التالية
+            sessionStorage.setItem('questionsUserId', userId);
+            sessionStorage.setItem('questionsUserName', userName);
+            window.location.href = '/user-questions.html';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+            userToDelete = null;
+        }
+
+        async function confirmDelete() {
+            if (!userToDelete) return;
+
+            try {
+                const response = await fetch(`${API_URL}/users/${userToDelete}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showSuccess('تم حذف المستخدم بنجاح');
+                    closeModal();
+                    loadUsers(); // إعادة تحميل قائمة المستخدمين
+                } else {
+                    showError(data.message || 'فشل في حذف المستخدم');
+                }
+            } catch (error) {
+                console.error('خطأ في حذف المستخدم:', error);
+                showError('خطأ في الاتصال بالخادم');
+            }
+        }
+
+        function showLoading() {
+            document.getElementById('loadingContainer').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingContainer').style.display = 'none';
+        }
+
+        function showError(message) {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = `
+                <div class="error-message">
+                    ❌ ${message}
+                </div>
+            `;
+
+            // إخفاء الرسالة بعد 5 ثواني
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = `
+                <div class="success-message">
+                    ✅ ${message}
+                </div>
+            `;
+
+            // إخفاء الرسالة بعد 5 ثواني
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('loginSuccess');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // إضافة مستمع للنقر خارج المودال لإغلاقه
+        document.addEventListener('click', function (event) {
+            const modal = document.getElementById('confirmationModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // إضافة مستمع لمفتاح Escape لإغلاق المودال
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        console.log('✅ تم تحميل صفحة إدارة المستخدمين بنجاح');
+    </script>
+</body>
+
+</html>

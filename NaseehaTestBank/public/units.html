@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الوحدات - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.1);
+        }
+
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .subject-filter {
+            background: rgba(106, 113, 216, 0.1);
+            border: 2px solid #6a71d8;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+            min-width: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subject-filter:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(106, 113, 216, 0.2);
+        }
+
+        .add-unit-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-unit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .units-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .units-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px 40px;
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .units-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .units-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .units-table-container {
+            padding: 40px;
+        }
+
+        .units-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .units-table th {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 15px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .units-table th:first-child {
+            border-radius: 0;
+        }
+
+        .units-table th:last-child {
+            border-radius: 0;
+        }
+
+        .units-table td {
+            padding: 20px 15px;
+            color: #333;
+            font-size: 15px;
+            background: white;
+            transition: background 0.3s ease;
+        }
+
+        .units-table tr:hover td {
+            background: rgba(106, 113, 216, 0.02);
+        }
+
+        .units-table tr:nth-child(even) td {
+            background: rgba(248, 250, 252, 0.5);
+        }
+
+        .units-table tr:nth-child(even):hover td {
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .unit-id {
+            font-weight: 600;
+            color: #6a71d8;
+        }
+
+        .unit-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .unit-description {
+            color: #666;
+            font-size: 14px;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .lessons-count {
+            font-weight: 600;
+            color: #059669;
+            text-align: center;
+        }
+
+        .questions-count {
+            font-weight: 600;
+            color: #dc2626;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .view-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .view-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .add-lesson-btn {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .add-lesson-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .delete-btn:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6a71d8;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6a71d8;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #fecaca;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #bbf7d0;
+        }
+
+        .no-units {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-units-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .modal-message {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-confirm {
+            background: #ef4444;
+            color: white;
+        }
+
+        .modal-btn-cancel {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .add-unit-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .add-unit-modal .modal-content {
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6a71d8;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .count-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .lessons-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .questions-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .text-center {
+            text-align: center;
+            padding: 12px;
+        }
+
+        .description-text {
+            display: block;
+            line-height: 1.4;
+            color: #555;
+        }
+
+        .unit-name strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .actions-cell {
+            padding: 8px 12px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .action-buttons button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .add-lesson-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .delete-btn:disabled {
+            background: #d1d5db;
+            color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .action-buttons button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .navbar-container {
+                padding: 0 20px;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 25px 20px;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .units-table-container {
+                padding: 20px;
+                overflow-x: auto;
+            }
+
+            .units-table {
+                min-width: 900px;
+            }
+
+            .units-table th,
+            .units-table td {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 4px;
+                align-items: stretch;
+            }
+
+            .action-buttons button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .subject-filter {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-role" id="userRole">مدير</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link"> الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="subject.html" class="nav-link"> المواد</a>
+                </li>
+                <li class="nav-item">
+                    <a href="users.html" class="nav-link"> إدارة المستخدمين</a>
+                </li>
+                <li class="nav-item">
+                    <a href="units.html" class="nav-link"> إدارة الوحدات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="lessons.html" class="nav-link"> إدارة الدروس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="main-topics.html" class="nav-link"> التصنيفات الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="sub-topics.html" class="nav-link"> التصنيفات الفرعية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="create_questions.html" class="nav-link active"> إنشاء سؤال</a>
+                </li>
+                <li class="nav-item">
+                    <a href="list.html" class="nav-link"> عرض الأسئلة</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title"> إدارة الوحدات</h1>
+                <p class="page-subtitle"></p>
+            </div>
+            <div class="header-actions">
+                <select id="subjectFilter" class="subject-filter" onchange="filterBySubject()">
+                    <option value="">جميع المواد</option>
+                </select>
+                <button class="add-unit-btn" onclick="showAddUnitModal()">
+                    ➕ إضافة وحدة جديدة
+                </button>
+            </div>
+        </div>
+
+        <div id="messagesContainer"></div>
+
+        <div class="units-container">
+            <div class="units-table-container">
+                <div id="loadingContainer" class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>جاري تحميل الوحدات...</p>
+                </div>
+
+                <div id="unitsTableContainer" style="display: none;">
+                    <table class="units-table">
+                        <thead>
+                            <tr>
+                                <th>الرقم</th>
+                                <th>اسم الوحدة</th>
+                                <th>المادة</th>
+                                <th>الوصف</th>
+                                <th>عدد الدروس</th>
+                                <th>عدد الأسئلة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="unitsTableBody">
+                            <!-- سيتم ملؤها بالبيانات -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="noUnitsContainer" class="no-units" style="display: none;">
+                    <div class="no-units-icon"></div>
+                    <h3>لا توجد وحدات</h3>
+                    <p>لم يتم العثور على أي وحدات في النظام</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- مودال تأكيد الحذف -->
+    <div id="confirmationModal" class="confirmation-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">⚠️ تأكيد الحذف</h3>
+            <p class="modal-message" id="modalMessage">هل أنت متأكد من حذف هذه الوحدة؟ هذا الإجراء لا يمكن التراجع عنه.
+            </p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModal()">إلغاء</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmDelete()">حذف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال إضافة وحدة -->
+    <div id="addUnitModal" class="add-unit-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">إضافة وحدة جديدة</h3>
+            <form id="addUnitForm">
+                <div class="form-group">
+                    <label for="unitSubject">المادة *</label>
+                    <select id="unitSubject" name="subject_id" required>
+                        <option value="">اختر المادة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="unitName">اسم الوحدة *</label>
+                    <input type="text" id="unitName" name="name" required placeholder="مثال: الجبر">
+                </div>
+                <div class="form-group">
+                    <label for="unitDescription">وصف الوحدة</label>
+                    <textarea id="unitDescription" name="description"
+                        placeholder="وصف مختصر عن محتوى الوحدة وأهدافها التعليمية"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-btn modal-btn-cancel"
+                        onclick="closeAddUnitModal()">إلغاء</button>
+                    <button type="submit" class="modal-btn modal-btn-confirm">إضافة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- مودال إضافة درس -->
+    <div id="addLessonModal" class="add-unit-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">إضافة درس جديد</h3>
+            <form id="addLessonForm">
+                <input type="hidden" id="selectedUnitId" name="unit_id">
+                <div class="form-group">
+                    <label for="selectedUnitName">الوحدة</label>
+                    <input type="text" id="selectedUnitName" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="lessonName">اسم الدرس *</label>
+                    <input type="text" id="lessonName" name="name" required placeholder="مثال: المعادلات الخطية">
+                </div>
+                <div class="form-group">
+                    <label for="lessonDescription">وصف الدرس</label>
+                    <textarea id="lessonDescription" name="description"
+                        placeholder="وصف محتوى الدرس والمهارات التي سيتعلمها الطالب"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-btn modal-btn-cancel"
+                        onclick="closeAddLessonModal()">إلغاء</button>
+                    <button type="submit" class="modal-btn modal-btn-confirm">إضافة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+        let unitToDelete = null;
+        let allUnits = [];
+        let allSubjects = [];
+
+        // تحميل البيانات عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            loadSubjects();
+            loadUnits();
+        });
+
+        // التحقق من صحة المصادقة
+        function checkAuth() {
+            const userData = sessionStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                if (currentUser.role !== 'Admin') {
+                    showError('ليس لديك صلاحية للوصول إلى هذه الصفحة');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                    return;
+                }
+                updateUserInfo();
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        // تحديث معلومات المستخدم في الواجهة
+        function updateUserInfo() {
+            document.getElementById('userRole').textContent = 'مدير';
+        }
+
+        // تحميل المواد
+        async function loadSubjects() {
+            try {
+                const response = await fetch(`${API_URL}/subjects`);
+                const data = await response.json();
+
+                if (data.success) {
+                    allSubjects = data.subjects;
+                    populateSubjectFilters();
+                } else {
+                    console.error('فشل في تحميل المواد');
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل المواد:', error);
+            }
+        }
+
+        // ملء قوائم المواد
+        function populateSubjectFilters() {
+            const subjectFilter = document.getElementById('subjectFilter');
+            const unitSubject = document.getElementById('unitSubject');
+
+            // تنظيف القوائم
+            subjectFilter.innerHTML = '<option value="">جميع المواد</option>';
+            unitSubject.innerHTML = '<option value="">اختر المادة</option>';
+
+            // إضافة المواد
+            allSubjects.forEach(subject => {
+                const option1 = document.createElement('option');
+                option1.value = subject.id;
+                option1.textContent = subject.name;
+                subjectFilter.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = subject.id;
+                option2.textContent = subject.name;
+                unitSubject.appendChild(option2);
+            });
+        }
+
+        // تحميل الوحدات مع الإحصائيات الحقيقية
+        async function loadUnits() {
+            try {
+                showLoading();
+                const response = await fetch(`${API_URL}/units`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // تحميل الإحصائيات لكل وحدة
+                    const unitsWithStats = await Promise.all(
+                        data.units.map(async (unit) => {
+                            try {
+                                const statsResponse = await fetch(`${API_URL}/units/${unit.id}/stats`);
+                                const statsData = await statsResponse.json();
+
+                                // البحث عن المادة التابعة لها الوحدة
+                                const subject = allSubjects.find(s => s.id === unit.subject_id);
+
+                                return {
+                                    ...unit,
+                                    subject_name: subject ? subject.name : 'غير محدد',
+                                    lessons_count: statsData.success ? (statsData.stats?.lessons_count || 0) : 0,
+                                    questions_count: statsData.success ? (statsData.stats?.questions_count || 0) : 0
+                                };
+                            } catch (error) {
+                                console.error(`خطأ في تحميل إحصائيات الوحدة ${unit.id}:`, error);
+                                return {
+                                    ...unit,
+                                    subject_name: 'غير محدد',
+                                    lessons_count: 0,
+                                    questions_count: 0
+                                };
+                            }
+                        })
+                    );
+
+                    allUnits = unitsWithStats;
+                    displayUnits(allUnits);
+                } else {
+                    showError('فشل في تحميل الوحدات');
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الوحدات:', error);
+                showError('خطأ في الاتصال بالخادم');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // تصفية الوحدات حسب المادة
+        function filterBySubject() {
+            const selectedSubjectId = document.getElementById('subjectFilter').value;
+
+            if (selectedSubjectId === '') {
+                displayUnits(allUnits);
+            } else {
+                const filteredUnits = allUnits.filter(unit => unit.subject_id == selectedSubjectId);
+                displayUnits(filteredUnits);
+            }
+        }
+
+        // عرض الوحدات في الجدول
+        function displayUnits(units) {
+            const tableBody = document.getElementById('unitsTableBody');
+            const tableContainer = document.getElementById('unitsTableContainer');
+            const noUnitsContainer = document.getElementById('noUnitsContainer');
+
+            if (units && units.length > 0) {
+                tableBody.innerHTML = units.map(unit => {
+                    const lessonsCount = parseInt(unit.lessons_count) || 0;
+                    const questionsCount = parseInt(unit.questions_count) || 0;
+                    const canDelete = (lessonsCount === 0 && questionsCount === 0);
+                    // تنظيف اسم الوحدة من الأحرف الخاصة
+                    const safeUnitName = unit.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
+
+                    return `
+                        <tr data-unit-id="${unit.id}">
+                            <td class="unit-id">#${unit.id}</td>
+                            <td class="unit-name">
+                                <strong>${unit.name}</strong>
+                            </td>
+                            <td class="text-center">
+                                <span class="subject-name">${unit.subject_name}</span>
+                            </td>
+                            <td class="unit-description" title="${unit.description || 'لا يوجد وصف'}">
+                                <span class="description-text">${truncateText(unit.description || 'لا يوجد وصف', 40)}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="count-badge lessons-badge">${lessonsCount}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="count-badge questions-badge">${questionsCount}</span>
+                            </td>
+                            <td class="actions-cell">
+                                <div class="action-buttons">
+                                    <button class="add-lesson-btn" onclick="showAddLessonModal(${unit.id}, '${safeUnitName}')" title="إضافة درس جديد">
+                                        ➕ إضافة درس
+                                    </button>
+                                    <button class="delete-btn" 
+                                        onclick="deleteUnit(${unit.id}, '${safeUnitName}')"
+                                        ${!canDelete ? 'disabled title="لا يمكن حذف وحدة تحتوي على دروس أو أسئلة"' : 'title="حذف الوحدة"'}
+                                        data-unit-id="${unit.id}">
+                                        🗑️ حذف
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                tableContainer.style.display = 'block';
+                noUnitsContainer.style.display = 'none';
+
+                // تحديث عداد الوحدات في العنوان
+                updatePageTitle(units.length);
+
+            } else {
+                tableContainer.style.display = 'none';
+                noUnitsContainer.style.display = 'block';
+                updatePageTitle(0);
+            }
+        }
+
+        // اقتطاع النص الطويل
+        function truncateText(text, maxLength) {
+            if (!text) return 'لا يوجد وصف';
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
+        // تحديث عنوان الصفحة
+        function updatePageTitle(count) {
+            const subtitle = document.querySelector('.page-subtitle');
+            if (subtitle) {
+                const selectedSubjectId = document.getElementById('subjectFilter').value;
+                if (selectedSubjectId) {
+                    const selectedSubject = allSubjects.find(s => s.id == selectedSubjectId);
+                    subtitle.textContent = `${selectedSubject.name}: ${count} وحدة`;
+                } else {
+                    subtitle.textContent = `إجمالي الوحدات: ${count}`;
+                }
+            }
+        }
+
+        // إضافة درس لوحدة معينة
+        function showAddLessonModal(unitId, unitName) {
+            document.getElementById('selectedUnitId').value = unitId;
+            document.getElementById('selectedUnitName').value = unitName;
+            document.getElementById('addLessonModal').style.display = 'flex';
+            document.getElementById('lessonName').focus();
+        }
+
+        // إغلاق مودال إضافة درس
+        function closeAddLessonModal() {
+            document.getElementById('addLessonModal').style.display = 'none';
+            document.getElementById('addLessonForm').reset();
+        }
+
+        // حذف وحدة
+        function deleteUnit(unitId, unitName) {
+            // التأكد من وجود unitId
+            if (!unitId || unitId === 'undefined' || unitId === 'null') {
+                showError('خطأ: لا يمكن تحديد الوحدة المراد حذفها');
+                console.error('unitId is invalid:', unitId);
+                return;
+            }
+
+            // تحويل unitId إلى رقم للتأكد وحفظه في المتغير العام
+            window.unitToDelete = parseInt(unitId);
+
+            if (isNaN(window.unitToDelete)) {
+                showError('خطأ: معرف الوحدة غير صحيح');
+                console.error('unitId is not a number:', unitId);
+                return;
+            }
+
+            document.getElementById('modalMessage').textContent =
+                `هل أنت متأكد من حذف الوحدة "${unitName}"؟ هذا الإجراء لا يمكن التراجع عنه.`;
+            document.getElementById('confirmationModal').style.display = 'flex';
+
+            console.log('Setting window.unitToDelete to:', window.unitToDelete);
+        }
+
+        // تأكيد الحذف
+        async function confirmDelete() {
+            // البحث عن unit ID بطرق متعددة
+            let unitId = window.unitToDelete || unitToDelete;
+
+            // إذا لم نجد الـ ID، نحاول البحث في DOM
+            if (!unitId) {
+                const activeDeleteBtn = document.querySelector('.delete-btn:not([disabled])');
+                if (activeDeleteBtn && activeDeleteBtn.dataset.unitId) {
+                    unitId = parseInt(activeDeleteBtn.dataset.unitId);
+                    console.log('Found unit ID from DOM:', unitId);
+                }
+            }
+
+            if (!unitId || isNaN(unitId)) {
+                showError('خطأ: لا يوجد وحدة محددة للحذف');
+                console.error('Unable to find valid unit ID. window.unitToDelete:', window.unitToDelete, 'unitToDelete:', unitToDelete);
+                closeModal();
+                return;
+            }
+
+            console.log('Attempting to delete unit with ID:', unitId);
+
+            try {
+                closeModal();
+                showLoading();
+
+                const deleteUrl = `${API_URL}/units/${unitId}`;
+                console.log('Delete URL:', deleteUrl);
+
+                const response = await fetch(deleteUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('Delete response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log('Delete response data:', data);
+
+                if (data.success) {
+                    showSuccess('تم حذف الوحدة بنجاح');
+                    loadUnits(); // إعادة تحميل القائمة
+                } else {
+                    showError(data.message || 'فشل في حذف الوحدة');
+                }
+            } catch (error) {
+                console.error('خطأ في حذف الوحدة:', error);
+                showError('خطأ في الاتصال بالخادم: ' + error.message);
+            } finally {
+                hideLoading();
+                // تنظيف المتغيرات
+                unitToDelete = null;
+                window.unitToDelete = null;
+            }
+        }
+
+        // إظهار مودال إضافة وحدة
+        function showAddUnitModal() {
+            document.getElementById('addUnitModal').style.display = 'flex';
+            document.getElementById('unitName').focus();
+        }
+
+        // إغلاق مودال إضافة وحدة
+        function closeAddUnitModal() {
+            document.getElementById('addUnitModal').style.display = 'none';
+            document.getElementById('addUnitForm').reset();
+        }
+
+        // إضافة وحدة جديدة
+        document.getElementById('addUnitForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            // التحقق من اختيار المادة
+            if (!data.subject_id) {
+                showError('يجب اختيار المادة');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/units`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showSuccess('تم إضافة الوحدة بنجاح');
+                    closeAddUnitModal();
+                    loadUnits(); // إعادة تحميل القائمة
+                } else {
+                    showError(result.message || 'فشل في إضافة الوحدة');
+                }
+            } catch (error) {
+                console.error('خطأ في إضافة الوحدة:', error);
+                showError('خطأ في الاتصال بالخادم');
+            }
+        });
+
+        // إضافة درس جديد
+        document.getElementById('addLessonForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch(`${API_URL}/lessons`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showSuccess('تم إضافة الدرس بنجاح');
+                    closeAddLessonModal();
+                    loadUnits(); // إعادة تحميل القائمة لتحديث الإحصائيات
+                } else {
+                    showError(result.message || 'فشل في إضافة الدرس');
+                }
+            } catch (error) {
+                console.error('خطأ في إضافة الدرس:', error);
+                showError('خطأ في الاتصال بالخادم');
+            }
+        });
+
+        // إغلاق المودال
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+            // لا نقوم بتصفير unitToDelete هنا حتى لا نفقد القيمة عند إلغاء المودال
+        }
+
+        // إظهار التحميل
+        function showLoading() {
+            document.getElementById('loadingContainer').style.display = 'block';
+            document.getElementById('unitsTableContainer').style.display = 'none';
+            document.getElementById('noUnitsContainer').style.display = 'none';
+        }
+
+        // إخفاء التحميل
+        function hideLoading() {
+            document.getElementById('loadingContainer').style.display = 'none';
+        }
+
+        // إظهار رسائل الخطأ
+        function showError(message) {
+            showMessage(message, 'error');
+        }
+
+        // إظهار رسائل النجاح
+        function showSuccess(message) {
+            showMessage(message, 'success');
+        }
+
+        // إظهار الرسائل
+        function showMessage(message, type) {
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${type}-message`;
+            messageDiv.textContent = message;
+
+            container.innerHTML = '';
+            container.appendChild(messageDiv);
+
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // إغلاق المودالات عند النقر خارجها
+        document.getElementById('confirmationModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        document.getElementById('addUnitModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeAddUnitModal();
+            }
+        });
+
+        document.getElementById('addLessonModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeAddLessonModal();
+            }
+        });
+
+        // اختصارات لوحة المفاتيح
+        document.addEventListener('keydown', function (e) {
+            // Escape لإغلاق المودالات
+            if (e.key === 'Escape') {
+                closeModal();
+                closeAddUnitModal();
+                closeAddLessonModal();
+            }
+
+            // F5 لتحديث القائمة
+            if (e.key === 'F5') {
+                e.preventDefault();
+                loadUnits();
+                showSuccess('تم تحديث القائمة');
+            }
+
+            // Ctrl+N لإضافة وحدة جديدة
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                showAddUnitModal();
+            }
+        });
+
+        // تحديث القائمة تلقائياً كل دقيقة
+        setInterval(loadUnits, 60000);
+    </script>
+</body>
+
+</html>

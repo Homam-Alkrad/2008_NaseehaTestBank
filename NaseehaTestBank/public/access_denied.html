@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ليس لديك الصلاحية</title>
+  <style>
+    :root {
+      --bg: #0f172a;          /* slate-900 */
+      --card: #111827;       /* gray-900 */
+      --text: #e5e7eb;       /* gray-200 */
+      --muted: #9ca3af;      /* gray-400 */
+      --accent: #3b82f6;     /* blue-500 */
+      --accent-hover: #2563eb;/* blue-600 */
+      --warning: #f59e0b;    /* amber-500 */
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Tahoma", "Cairo", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -200px, #1f2937, var(--bg));
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      backdrop-filter: blur(6px);
+      text-align: center;
+    }
+
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      font-size: 28px;
+    }
+
+    h1 {
+      margin: 8px 0 6px;
+      font-size: clamp(20px, 3.6vw, 26px);
+      line-height: 1.4;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease;
+      box-shadow: 0 6px 20px rgba(37,99,235,0.25);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn:active { transform: translateY(1px); }
+
+    .hint {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      opacity: .9;
+    }
+    .kbd {
+      display: inline-block;
+      padding: 2px 6px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="alert" aria-live="polite">
+    <div class="icon" aria-hidden="true">⚠️</div>
+    <h1>ليس لديك الصلاحية للدخول إلى هذه الصفحة</h1>
+    <p>
+      يبدو أنك تحاول الوصول إلى صفحة تتطلب صلاحيات خاصة. الرجاء تسجيل الدخول بحساب يملك الأذونات اللازمة.
+    </p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="login.html" rel="nofollow">
+        ← العودة إلى صفحة تسجيل الدخول
+      </a>
+    </div>
+
+    <div class="hint">
+      إن كنت تملك حسابًا مناسبًا، جرّب <span class="kbd">تسجيل الدخول</span> مرة أخرى.
+    </div>
+  </main>
+</body>
+</html>

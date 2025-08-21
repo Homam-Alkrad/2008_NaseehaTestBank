@@ -1,0 +1,50 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        // حذف المستخدمين الموجودين (اختياري)
+        User::whereIn('username', ['admin', 'testuser'])->delete();
+
+        // إنشاء المدير الرئيسي
+        User::create([
+            'name' => 'مدير النظام',
+            'username' => 'admin',
+            'email' => 'admin@naseeha.com',
+            'password' => Hash::make('admin123'),
+            'role' => 'Admin'
+        ]);
+
+        // إنشاء مستخدم عادي
+        User::create([
+            'name' => 'مستخدم تجريبي',
+            'username' => 'testuser',
+            'email' => 'user@naseeha.com',
+            'password' => Hash::make('123456'),
+            'role' => 'User'
+        ]);
+
+        echo "تم إنشاء المستخدمين بنجاح!\n";
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+        echo "👨‍💼 المدير:\n";
+        echo "   Username: admin\n";
+        echo "   Password: admin123\n";
+        echo "   Role: Admin\n";
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+        echo "👤 المستخدم العادي:\n";
+        echo "   Username: testuser\n";
+        echo "   Password: 123456\n";
+        echo "   Role: User\n";
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+    }
+}

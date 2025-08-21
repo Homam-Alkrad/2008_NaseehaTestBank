@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الرئيسية - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(106, 113, 216, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6, #6a71d8);
+            background-size: 200% 100%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .welcome-title {
+            font-size: 42px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6a71d8, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 20px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .stats-container {
+            margin-bottom: 50px;
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-title {
+            font-size: 28px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .stats-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(106, 113, 216, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(106, 113, 216, 0.15);
+            border-color: #6a71d8;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-icon.users {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-icon.units {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .stat-icon.lessons {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-icon.topics {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .stat-icon.questions {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .stat-icon.subtopics {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .stat-action {
+            margin-top: 15px;
+        }
+
+        .stat-action .action-btn {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-action .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .stat-action .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(106, 113, 216, 0.3);
+        }
+
+        .stat-action .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .stat-action .action-btn.secondary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-action .action-btn.secondary:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading-stat {
+            color: #6a71d8;
+            font-size: 20px;
+        }
+
+
+
+
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #fecaca;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #bbf7d0;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .welcome-section {
+                padding: 40px 20px;
+            }
+
+            .welcome-title {
+                font-size: 32px;
+            }
+
+            .welcome-subtitle {
+                font-size: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-action {
+            background-color: #8b6bf0;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        .stat-action a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* إضافة أنيميشن للدوران */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* حالة عدم الاتصال */
+        .offline .header {
+            filter: grayscale(50%);
+        }
+
+        .offline .stat-card {
+            opacity: 0.7;
+        }
+
+        /* تحسينات إضافية للموبايل */
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 24px;
+            }
+
+            .welcome-subtitle {
+                font-size: 14px;
+            }
+
+            .stat-card {
+                padding: 25px 15px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .stat-action .action-btn {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    
+                    <div class="user-role" id="userRole">مستخدم</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="stats-container">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-icon users">👥</div>
+                    <div class="stat-number loading-stat" id="usersCount">...</div>
+                    <div class="stat-label">إجمالي المستخدمين</div>
+                    <div class="stat-action">
+                        <a href="/users.html">عرض المستخدمين</a>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon units">📚</div>
+                    <div class="stat-number loading-stat" id="unitsCount">...</div>
+                    <div class="stat-label">الوحدات التعليمية</div>
+                    <div class="stat-action">
+                        <a href="/units.html">إدارة الوحدات</a>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon lessons">📖</div>
+                    <div class="stat-number loading-stat" id="lessonsCount">...</div>
+                    <div class="stat-label">الدروس</div>
+                    <div class="stat-action">
+                        <a href="/lessons.html">إدارة الدروس</a>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon topics">🏷️</div>
+                    <div class="stat-number loading-stat" id="mainTopicsCount">...</div>
+                    <div class="stat-label">التصنيفات الرئيسية</div>
+                    <div class="stat-action">
+                        <a href="/main-topics.html">إدارة التصنيفات الرئيسية</a>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon subtopics">🔖</div>
+                    <div class="stat-number loading-stat" id="subTopicsCount">...</div>
+                    <div class="stat-label">التصنيفات الفرعية</div>
+                    <div class="stat-action">
+                        <a href="/sub-topics.html">إدارة التصنيفات الفرعية</a>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon questions">❓</div>
+                    <div class="stat-number loading-stat" id="questionsCount">...</div>
+                    <div class="stat-label">الأسئلة</div>
+                    <div class="stat-action">
+                        <a href="list.html">عرض الأسئلة</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // تأخير قصير للسماح للبيانات بالحفظ
+            setTimeout(() => {
+                checkAuth();
+            }, 200);
+        });
+
+        // التحقق من صحة المصادقة (محسن)
+        function checkAuth() {
+            // تعطيل مؤقت للاختبار المحلي
+            if (window.location.protocol === 'file:') {
+                currentUser = { name: 'مستخدم تجريبي', role: 'Admin' };
+                updateUserInfo();
+                setupUserActions();
+                loadStats();
+                return;
+            }
+
+            const userData = sessionStorage.getItem('user');
+            const loginSuccess = sessionStorage.getItem('loginSuccess');
+
+            console.log('بيانات المستخدم المحفوظة:', userData);
+            console.log('حالة تسجيل الدخول:', loginSuccess);
+
+            if (!userData) {
+                console.log('لا توجد بيانات مستخدم محفوظة');
+
+                // إعطاء فرصة إضافية إذا كان تسجيل الدخول حديث
+                if (loginSuccess === 'true') {
+                    console.log('محاولة إعادة التحقق...');
+                    setTimeout(() => {
+                        const retryUserData = sessionStorage.getItem('user');
+                        if (!retryUserData) {
+                            console.log('فشل في العثور على البيانات، إعادة توجيه للـ login');
+                            sessionStorage.removeItem('loginSuccess');
+                            window.location.href = 'login.html';
+                        } else {
+                            checkAuth(); // محاولة مرة أخرى
+                        }
+                    }, 1000);
+                    return;
+                } else {
+                    window.location.href = 'login.html';
+                    return;
+                }
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                console.log('تم تحليل بيانات المستخدم بنجاح:', currentUser);
+
+                // التحقق من وجود الحقول المطلوبة
+                if (!currentUser.name || !currentUser.role) {
+                    throw new Error('بيانات المستخدم غير مكتملة');
+                }
+
+                // مسح علامة تسجيل الدخول الناجح
+                sessionStorage.removeItem('loginSuccess');
+
+                updateUserInfo();
+                setupUserActions();
+                loadStats();
+
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+
+                // مسح البيانات التالفة
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('loginSuccess');
+
+                // عرض رسالة للمستخدم
+                if (confirm('حدث خطأ في قراءة بيانات المستخدم. هل تريد تسجيل الدخول مرة أخرى؟')) {
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        // تحديث معلومات المستخدم في الواجهة
+        function updateUserInfo() {
+
+            document.getElementById('userRole').textContent = currentUser.role === 'Admin' ? 'مدير' : 'مستخدم';
+        }
+
+        // إعداد الإجراءات حسب دور المستخدم
+        function setupUserActions() {
+            // التحقق من وجود العناصر قبل التعديل
+            const usersAction = document.getElementById('usersAction');
+            const unitsAction = document.getElementById('unitsAction');
+            const lessonsAction = document.getElementById('lessonsAction');
+            const topicsAction = document.getElementById('topicsAction');
+            const subtopicsAction = document.getElementById('subtopicsAction');
+            const questionsAction = document.getElementById('questionsAction');
+
+            if (!usersAction || !unitsAction || !lessonsAction || !topicsAction || !subtopicsAction || !questionsAction) {
+                console.error('بعض العناصر المطلوبة غير موجودة في الصفحة');
+                return;
+            }
+
+            if (currentUser.role === 'Admin') {
+                // إجراءات المدير
+                usersAction.innerHTML = '<a href="/users.html" class="action-btn">👥 إدارة المستخدمين</a>';
+                unitsAction.innerHTML = '<a href="/units.html" class="action-btn">📚 إدارة الوحدات</a>';
+                lessonsAction.innerHTML = '<a href="/lessons.html" class="action-btn secondary"> إدارة الدروس</a>';
+                topicsAction.innerHTML = '<a href="/main-topics.html" class="action-btn secondary">🏷️ إدارة التصنيفات الرئيسية</a>';
+                subtopicsAction.innerHTML = '<a href="/sub-topics.html" class="action-btn secondary">🔖 إدارة التصنيفات الفرعية</a>';
+                questionsAction.innerHTML = '<a href="list.html" class="action-btn">📋 عرض جميع الأسئلة</a>';
+            } else {
+                // إجراءات المستخدم العادي
+                usersAction.innerHTML = '<button class="action-btn secondary" onclick="viewProfile()">👤 ملفي الشخصي</button>';
+                unitsAction.innerHTML = '<button class="action-btn secondary" onclick="browseUnits()">📚 تصفح الوحدات</button>';
+                lessonsAction.innerHTML = '<button class="action-btn secondary" onclick="browseLessons()"> تصفح الدروس</button>';
+                topicsAction.innerHTML = '<button class="action-btn secondary" onclick="browseTopics()">🏷️ تصفح التصنيفات</button>';
+                subtopicsAction.innerHTML = '<button class="action-btn secondary" onclick="browseSubtopics()">🔖 تصفح الفرعيات</button>';
+                questionsAction.innerHTML = '<a href="/create_questions.html" class="action-btn">❓ إنشاء سؤال جديد</a>';
+            }
+        }
+
+        // تحميل الإحصائيات
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_URL}/stats/general`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // تحديث الإحصائيات مباشرة بدون تأثير العد
+                    updateStatElement('usersCount', data.stats.counts.total_users);
+                    updateStatElement('unitsCount', data.stats.counts.total_units);
+                    updateStatElement('lessonsCount', data.stats.counts.total_lessons);
+                    updateStatElement('mainTopicsCount', data.stats.counts.total_main_topics);
+                    updateStatElement('subTopicsCount', data.stats.counts.total_sub_topics);
+                    updateStatElement('questionsCount', data.stats.counts.total_questions);
+                } else {
+                    showError('خطأ في تحميل الإحصائيات');
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الإحصائيات:', error);
+                showError('خطأ في الاتصال بالخادم لتحميل الإحصائيات');
+
+                // إظهار قيم افتراضية
+                ['usersCount', 'unitsCount', 'lessonsCount', 'mainTopicsCount', 'subTopicsCount', 'questionsCount'].forEach(id => {
+                    updateStatElement(id, '0');
+                });
+            }
+        }
+
+        // دالة مساعدة لتحديث الإحصائيات
+        function updateStatElement(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = value;
+                element.className = 'stat-number';
+            }
+        }
+
+        // إضافة دالة لإعادة التحقق من المصادقة
+        function refreshAuth() {
+            console.log('إعادة تحميل بيانات المصادقة...');
+            checkAuth();
+        }
+
+        // باقي الكود يبقى كما هو...
+
+        // إظهار رسائل الخطأ
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.insertBefore(errorDiv, mainContent.firstChild);
+
+                setTimeout(() => {
+                    if (errorDiv.parentNode) {
+                        errorDiv.remove();
+                    }
+                }, 5000);
+            }
+        }
+
+        // إظهار رسائل النجاح
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.insertBefore(successDiv, mainContent.firstChild);
+
+                setTimeout(() => {
+                    if (successDiv.parentNode) {
+                        successDiv.remove();
+                    }
+                }, 5000);
+            }
+        }
+
+        // دوال الإجراءات
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('loginSuccess');
+                window.location.href = 'login.html';
+            }
+        }
+
+        function manageUsers() {
+            window.location.href = '/users.html';
+        }
+
+        function viewProfile() {
+            alert('ميزة الملف الشخصي قيد التطوير');
+        }
+
+        function browseUnits() {
+            alert('ميزة تصفح الوحدات قيد التطوير');
+        }
+
+        function browseLessons() {
+            alert('ميزة تصفح الدروس قيد التطوير');
+        }
+
+        function browseTopics() {
+            alert('ميزة تصفح التصنيفات قيد التطوير');
+        }
+
+        function browseSubtopics() {
+            alert('ميزة تصفح التصنيفات الفرعية قيد التطوير');
+        }
+
+        // إضافة معالج للأخطاء العامة
+        window.addEventListener('error', function (e) {
+            console.error('خطأ JavaScript:', e.error);
+        });
+
+        // إضافة اختصارات لوحة المفاتيح للمطورين
+        document.addEventListener('keydown', function (e) {
+            // Ctrl+Shift+R لإعادة تحميل البيانات
+            if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+                e.preventDefault();
+                refreshAuth();
+                console.log('تم إعادة تحميل بيانات المصادقة');
+            }
+        });
+    </script>
+</body>
+
+</html>

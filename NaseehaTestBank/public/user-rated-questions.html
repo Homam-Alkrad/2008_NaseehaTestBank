@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأسئلة المقيمة - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.1);
+        }
+
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #6a71d8;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .questions-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .questions-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px 40px;
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .questions-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .questions-count {
+            background: #6a71d8;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6a71d8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #6a71d8;
+        }
+
+        .question-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+            min-height: 48px;
+        }
+
+        .question-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            font-size: 18px;
+            color: #ffd700;
+        }
+
+        .star.empty {
+            color: #ddd;
+        }
+
+        .rating-text {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .user-rating-section {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .user-rating-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #059669;
+            margin-bottom: 10px;
+        }
+
+        .user-rating-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .question-details {
+            background: rgba(106, 113, 216, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .detail-value {
+            color: #6b7280;
+        }
+
+        .comment {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+            font-style: italic;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-edit-rating {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-questions {
+            text-align: center;
+            padding: 80px 40px;
+            color: #666;
+        }
+
+        .no-questions-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .no-questions h3 {
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 40px;
+            text-align: center;
+            border: 1px solid #fecaca;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px;
+            border: none;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #6a71d8;
+            box-shadow: 0 0 0 3px rgba(106, 113, 216, 0.1);
+        }
+
+        .rating-stars-selector {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .rating-star-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #ddd;
+            transition: all 0.2s ease;
+        }
+
+        .rating-star-btn:hover,
+        .rating-star-btn.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-secondary:hover {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .navbar-container {
+                padding: 0 20px;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .page-header {
+                padding: 25px 20px;
+            }
+
+            .questions-header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .questions-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .user-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-name" id="userName">مستخدم</div>
+                    <div class="user-role" id="userRole">مستخدم</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="user-page.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="user-create-questions.html" class="nav-link">إنشاء سؤال</a>
+                </li>
+                <li class="nav-item">
+                    <a href="user-created-questions.html" class="nav-link">أسئلتي</a>
+                </li>
+                <li class="nav-item">
+                    <a href="user-rated-questions.html" class="nav-link active">الأسئلة المقيمة</a>
+                </li>
+                <li class="nav-item">
+                    <a href="user-unrated-questions.html" class="nav-link">أسئلة للتقييم</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- إحصائيات التقييمات -->
+        <div class="user-stats" id="userStats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number" id="totalRated">0</div>
+                <div class="stat-label">أسئلة مقيمة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number" id="averageGiven">0</div>
+                <div class="stat-label">متوسط تقييماتي</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number" id="highRatingsGiven">0</div>
+                <div class="stat-label">تقييمات عالية منحتها</div>
+            </div>
+        </div>
+
+        <!-- حاوية الأسئلة -->
+        <div class="questions-container">
+            <div class="questions-header">
+                <h2 class="questions-title">⭐ الأسئلة المقيمة</h2>
+                <div class="questions-count" id="questionsCount">0 سؤال</div>
+            </div>
+
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading-spinner"></div>
+                <p>جاري تحميل الأسئلة المقيمة...</p>
+            </div>
+
+            <div class="questions-grid" id="questionsGrid" style="display: none;">
+                <!-- سيتم ملؤها بالبيانات -->
+            </div>
+
+            <div class="no-questions" id="noQuestions" style="display: none;">
+                <div class="no-questions-icon">⭐</div>
+                <h3>لا توجد أسئلة مقيمة</h3>
+                <p>لم تقم بتقييم أي أسئلة حتى الآن</p>
+                <a href="user-unrated-questions.html" class="btn btn-primary" style="margin-top: 20px;">قيم بعض
+                    الأسئلة</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Rating Modal -->
+    <div id="editRatingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">تعديل التقييم</h2>
+                <span class="close" onclick="closeEditRatingModal()">&times;</span>
+            </div>
+            <form id="editRatingForm">
+                <div class="form-group">
+                    <label class="form-label">التقييم الجديد</label>
+                    <div class="rating-stars-selector" id="ratingStarsSelector">
+                        <button type="button" class="rating-star-btn" data-rating="1">★</button>
+                        <button type="button" class="rating-star-btn" data-rating="2">★</button>
+                        <button type="button" class="rating-star-btn" data-rating="3">★</button>
+                        <button type="button" class="rating-star-btn" data-rating="4">★</button>
+                        <button type="button" class="rating-star-btn" data-rating="5">★</button>
+                    </div>
+                    <p style="margin-top: 10px; color: #666; font-size: 14px;" id="ratingDescription">اختر تقييمك</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEditRatingModal()">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ التقييم</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+        let currentUser = null;
+        let ratedQuestions = [];
+        let editingQuestionId = null;
+        let selectedRating = 0;
+
+        // تحميل البيانات عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            loadRatedQuestions();
+            setupRatingSelector();
+            addImageStyles();
+        });
+
+        // إضافة CSS للصور والأزرار الجديدة
+        function addImageStyles() {
+            const styles = `
+                <style>
+                    .show-classifications-btn, .show-answer-btn {
+                        background: #007bff;
+                        color: white;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        margin: 5px;
+                        font-size: 14px;
+                        transition: all 0.3s ease;
+                        width: 100%;
+                    }
+                    
+                    .show-classifications-btn:hover, .show-answer-btn:hover {
+                        background: #0056b3;
+                        transform: translateY(-1px);
+                    }
+                    
+                    .show-classifications-btn.active {
+                        background: #dc3545;
+                    }
+                    
+                    .show-answer-btn.active {
+                        background: #dc3545;
+                    }
+                    
+                    .question-classifications {
+                        display: none;
+                        background: #f8f9fa;
+                        padding: 15px;
+                        border-radius: 8px;
+                        margin: 15px 0;
+                        border: 1px solid #e9ecef;
+                    }
+                    
+                    .detail-row {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 8px;
+                        padding: 5px 0;
+                        border-bottom: 1px solid #e9ecef;
+                    }
+                    
+                    .detail-row:last-child {
+                        border-bottom: none;
+                        margin-bottom: 0;
+                    }
+                    
+                    .detail-label {
+                        font-weight: 600;
+                        color: #495057;
+                        font-size: 14px;
+                    }
+                    
+                    .detail-value {
+                        color: #007bff;
+                        font-weight: 500;
+                        font-size: 14px;
+                    }
+                    
+                    .answer-image-container {
+                        display: none;
+                        text-align: center;
+                        margin: 15px 0;
+                        background: #f8f9fa;
+                        padding: 15px;
+                        border-radius: 10px;
+                        border: 1px solid #e9ecef;
+                    }
+                    
+                    .answer-label {
+                        font-weight: bold;
+                        color: #28a745;
+                        margin-bottom: 10px;
+                        display: block;
+                        font-size: 14px;
+                    }
+                    
+                    .answer-image {
+                        max-width: 100%;
+                        height: auto;
+                        max-height: 200px;
+                        border-radius: 8px;
+                        margin: 10px 0;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                        border: 2px solid #28a745;
+                    }
+                    
+                    .answer-image:hover {
+                        transform: scale(1.05);
+                    }
+                    
+                    .toggle-buttons-container {
+                        display: flex;
+                        gap: 10px;
+                        margin: 15px 0;
+                    }
+                    
+                    .modal-overlay {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0,0,0,0.8);
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    
+                    .modal-content-image {
+                        background: white;
+                        border-radius: 12px;
+                        max-width: 90%;
+                        max-height: 90%;
+                        overflow-y: auto;
+                        position: relative;
+                    }
+                    
+                    .modal-header-image {
+                        padding: 20px;
+                        border-bottom: 1px solid #eee;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    
+                    .close-btn {
+                        background: none;
+                        border: none;
+                        font-size: 24px;
+                        cursor: pointer;
+                        color: #666;
+                    }
+                    
+                    .close-btn:hover {
+                        color: #333;
+                    }
+                </style>
+            `;
+            document.head.insertAdjacentHTML('beforeend', styles);
+        }
+
+        function checkAuth() {
+            const userData = sessionStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserInfo();
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        function updateUserInfo() {
+            if (!currentUser) return;
+
+            const userNameEl = document.getElementById('userName');
+            const userRoleEl = document.getElementById('userRole');
+
+            if (userNameEl) userNameEl.textContent = currentUser.name || 'مستخدم';
+            if (userRoleEl) userRoleEl.textContent = currentUser.role === 'Admin' ? 'مدير' : 'مستخدم';
+        }
+
+        // تحميل الأسئلة المقيمة
+        async function loadRatedQuestions() {
+            if (!currentUser) return;
+
+            try {
+                showLoading(true);
+
+                // تحميل جميع الأسئلة
+                const questionsResponse = await fetch(`${API_URL}/questions`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const questionsData = await questionsResponse.json();
+
+                if (questionsData.success) {
+                    const allQuestions = questionsData.questions;
+
+                    // فلترة الأسئلة (استبعاد أسئلة المستخدم نفسه)
+                    const otherUsersQuestions = allQuestions.filter(q => q.user_id !== currentUser.id);
+
+                    // فحص التقييمات لكل سؤال
+                    await loadUserRatingsForQuestions(otherUsersQuestions);
+
+                } else {
+                    showError('فشل في تحميل الأسئلة: ' + (questionsData.message || 'خطأ غير معروف'));
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الأسئلة:', error);
+                showError('خطأ في الاتصال بالخادم');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // تحميل تقييمات المستخدم للأسئلة
+        async function loadUserRatingsForQuestions(questions) {
+            ratedQuestions = [];
+            let totalRating = 0;
+            let highRatingsCount = 0;
+
+            for (let question of questions) {
+                try {
+                    const ratingsResponse = await fetch(`${API_URL}/questions/${question.id}/ratings`);
+                    const ratingsData = await ratingsResponse.json();
+
+                    if (ratingsData.success && ratingsData.ratings) {
+                        const userRating = ratingsData.ratings.find(rating => rating.user_id === currentUser.id);
+
+                        if (userRating) {
+                            question.user_rating = userRating.rating;
+                            ratedQuestions.push(question);
+                            totalRating += userRating.rating;
+                            if (userRating.rating >= 4) highRatingsCount++;
+                        }
+                    }
+                } catch (error) {
+                    console.error(`خطأ في تحميل تقييمات السؤال ${question.id}:`, error);
+                }
+            }
+
+            // عرض النتائج
+            displayQuestions(ratedQuestions);
+            displayStatistics(ratedQuestions.length, totalRating, highRatingsCount);
+        }
+
+        // عرض الأسئلة
+        function displayQuestions(questions) {
+            const grid = document.getElementById('questionsGrid');
+            const noQuestions = document.getElementById('noQuestions');
+            const questionsCount = document.getElementById('questionsCount');
+
+            if (questions && questions.length > 0) {
+                if (grid) {
+                    grid.innerHTML = questions.map(question => createQuestionCard(question)).join('');
+                    grid.style.display = 'grid';
+                }
+                if (noQuestions) {
+                    noQuestions.style.display = 'none';
+                }
+                if (questionsCount) {
+                    questionsCount.textContent = `${questions.length} سؤال`;
+                }
+            } else {
+                if (grid) {
+                    grid.style.display = 'none';
+                }
+                if (noQuestions) {
+                    noQuestions.style.display = 'block';
+                }
+                if (questionsCount) {
+                    questionsCount.textContent = '0 سؤال';
+                }
+            }
+        }
+
+        // إنشاء بطاقة السؤال
+        function createQuestionCard(question) {
+            const stars = createStars(question.rating || 0);
+            const userStars = createStars(question.user_rating || 0);
+            const ratingTexts = {
+                1: 'ضعيف', 2: 'مقبول', 3: 'جيد', 4: 'جيد جداً', 5: 'ممتاز'
+            };
+
+            // معالجة الصورة
+            let imageHtml = '';
+            if (question.image) {
+                const imageUrl = question.image.startsWith('http')
+                    ? question.image
+                    : `http://127.0.0.1:8000/storage/${question.image}`;
+                imageHtml = `<img src="${imageUrl}" alt="صورة السؤال" class="question-image" onerror="this.style.display='none'" onclick="openImageModal('${imageUrl}', 'صورة السؤال')">`;
+            }
+
+            // معالجة صورة الحل
+            let answerSection = '';
+            if (question.answer) {
+                const answerUrl = question.answer.startsWith('http')
+                    ? question.answer
+                    : `http://127.0.0.1:8000/storage/${question.answer}`;
+                answerSection = `
+                    <div class="answer-image-container" id="answer-${question.id}">
+                        <span class="answer-label">✅ الحل:</span>
+                        <img src="${answerUrl}" 
+                             alt="صورة الحل" 
+                             class="answer-image"
+                             onerror="this.style.display='none'"
+                             onclick="openImageModal('${answerUrl}', 'صورة الحل')">
+                    </div>
+                `;
+            }
+
+            // معالجة التعليق
+            const comment = question.creator_comment || question.comment;
+            const commentHtml = comment ? `<div class="comment">💬 ${comment}</div>` : '';
+
+            return `
+                <div class="question-card">
+                    <div class="question-text">${question.text || 'لا يوجد نص للسؤال'}</div>
+                    ${imageHtml}
+                    
+                    <!-- أزرار التحكم -->
+                    <div class="toggle-buttons-container">
+                        <button class="show-classifications-btn" id="show-classifications-${question.id}" onclick="toggleClassifications(${question.id})">
+                            📋 إظهار التصنيفات
+                        </button>
+                        ${question.answer ? `
+                        <button class="show-answer-btn" id="show-answer-${question.id}" onclick="toggleAnswer(${question.id})">
+                            🔓 إظهار الحل
+                        </button>
+                        ` : ''}
+                    </div>
+                    
+                    <!-- التصنيفات (مخفية افتراضياً) -->
+                    <div class="question-classifications" id="classifications-${question.id}">
+                        <div class="detail-row">
+                            <span class="detail-label">الوحدة:</span>
+                            <span class="detail-value">${question.unit?.name || 'غير محدد'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">الدرس:</span>
+                            <span class="detail-value">${question.lesson?.name || 'غير محدد'}</span>
+                        </div>
+                        ${question.main_topic ? `
+                        <div class="detail-row">
+                            <span class="detail-label">الموضوع الرئيسي:</span>
+                            <span class="detail-value">${question.main_topic.name}</span>
+                        </div>
+                        ` : ''}
+                        ${question.sub_topic ? `
+                        <div class="detail-row">
+                            <span class="detail-label">الموضوع الفرعي:</span>
+                            <span class="detail-value">${question.sub_topic.name}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <!-- صورة الحل (مخفية افتراضياً) -->
+                    ${answerSection}
+                    
+                    <div class="question-meta">
+                        <span>📅 ${formatDate(question.created_at)}</span>
+                        <span>#${question.id}</span>
+                        <span>بواسطة: ${question.user?.name || 'مجهول'}</span>
+                    </div>
+                    
+                    <div class="rating-container">
+                        <div class="stars">${stars}</div>
+                        <span class="rating-text">تقييم المنشئ: ${ratingTexts[question.rating] || 'غير محدد'} (${question.rating || 0}/5)</span>
+                    </div>
+
+                    <div class="user-rating-section">
+                        <div class="user-rating-title">تقييمك للسؤال:</div>
+                        <div class="user-rating-display">
+                            <div class="user-rating-stars">${userStars}</div>
+                            <span class="rating-text">${ratingTexts[question.user_rating]} (${question.user_rating}/5)</span>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn btn-edit-rating" onclick="editRating(${question.id}, ${question.user_rating})">
+                                ✏️ تعديل التقييم
+                            </button>
+                        </div>
+                    </div>
+                    
+                    ${commentHtml}
+                </div>
+            `;
+        }
+
+        // إظهار/إخفاء التصنيفات
+        function toggleClassifications(questionId) {
+            const classificationsContainer = document.getElementById(`classifications-${questionId}`);
+            const showBtn = document.getElementById(`show-classifications-${questionId}`);
+            
+            if (classificationsContainer.style.display === 'none' || classificationsContainer.style.display === '') {
+                classificationsContainer.style.display = 'block';
+                showBtn.textContent = '📋 إخفاء التصنيفات';
+                showBtn.classList.add('active');
+            } else {
+                classificationsContainer.style.display = 'none';
+                showBtn.textContent = '📋 إظهار التصنيفات';
+                showBtn.classList.remove('active');
+            }
+        }
+
+        // إظهار/إخفاء الحل
+        function toggleAnswer(questionId) {
+            const answerContainer = document.getElementById(`answer-${questionId}`);
+            const showBtn = document.getElementById(`show-answer-${questionId}`);
+            
+            if (answerContainer.style.display === 'none' || answerContainer.style.display === '') {
+                answerContainer.style.display = 'block';
+                showBtn.textContent = '🔒 إخفاء الحل';
+                showBtn.classList.add('active');
+            } else {
+                answerContainer.style.display = 'none';
+                showBtn.textContent = '🔓 إظهار الحل';
+                showBtn.classList.remove('active');
+            }
+        }
+
+        // فتح نافذة الصورة
+        function openImageModal(imageUrl, title = 'صورة') {
+            const modalHTML = `
+                <div class="modal-overlay" onclick="closeImageModal()">
+                    <div class="modal-content-image" onclick="event.stopPropagation()">
+                        <div class="modal-header-image">
+                            <h3>${title}</h3>
+                            <button class="close-btn" onclick="closeImageModal()">×</button>
+                        </div>
+                        <div style="text-align: center; padding: 20px;">
+                            <img src="${imageUrl}" 
+                                 alt="${title}" 
+                                 style="width: 100%; height: auto; border-radius: 8px; max-height: 80vh; object-fit: contain;">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        // إغلاق نافذة الصورة
+        function closeImageModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // إنشاء نجوم التقييم
+        function createStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<span class="star ${i <= rating ? '' : 'empty'}">★</span>`;
+            }
+            return stars;
+        }
+
+        // عرض الإحصائيات
+        function displayStatistics(totalRated, totalRating, highRatingsCount) {
+            const totalRatedEl = document.getElementById('totalRated');
+            const averageGivenEl = document.getElementById('averageGiven');
+            const highRatingsGivenEl = document.getElementById('highRatingsGiven');
+            const userStatsEl = document.getElementById('userStats');
+
+            if (totalRatedEl) {
+                totalRatedEl.textContent = totalRated;
+            }
+
+            if (averageGivenEl) {
+                averageGivenEl.textContent = totalRated > 0 ? (totalRating / totalRated).toFixed(1) : '0.0';
+            }
+
+            if (highRatingsGivenEl) {
+                highRatingsGivenEl.textContent = highRatingsCount;
+            }
+
+            if (userStatsEl) {
+                userStatsEl.style.display = 'grid';
+            }
+        }
+
+        // تنسيق التاريخ
+        function formatDate(dateString) {
+            if (!dateString) return 'غير محدد';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // إظهار/إخفاء التحميل
+        function showLoading(show) {
+            const loadingElement = document.getElementById('loadingContainer');
+            if (loadingElement) {
+                loadingElement.style.display = show ? 'block' : 'none';
+            }
+        }
+
+        // إظهار رسائل الخطأ
+        function showError(message) {
+            const questionsContainer = document.querySelector('.questions-container');
+            if (questionsContainer) {
+                questionsContainer.innerHTML = `
+                    <div class="error-message">
+                        ❌ ${message}
+                    </div>
+                `;
+            } else {
+                alert(message);
+            }
+        }
+
+        // تعديل التقييم
+        function editRating(questionId, currentRating) {
+            editingQuestionId = questionId;
+            selectedRating = currentRating;
+
+            // تحديث النجوم المحددة
+            updateRatingStars(currentRating);
+
+            // إظهار المودال
+            document.getElementById('editRatingModal').style.display = 'block';
+        }
+
+        // إعداد محدد التقييم
+        function setupRatingSelector() {
+            const starButtons = document.querySelectorAll('.rating-star-btn');
+            const ratingDescriptions = {
+                1: 'ضعيف - غير مفيد',
+                2: 'مقبول - مفيد إلى حد ما',
+                3: 'جيد - مفيد',
+                4: 'جيد جداً - مفيد جداً',
+                5: 'ممتاز - مفيد للغاية'
+            };
+
+            starButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const rating = parseInt(this.dataset.rating);
+                    selectedRating = rating;
+                    updateRatingStars(rating);
+
+                    // تحديث النص الوصفي
+                    document.getElementById('ratingDescription').textContent = ratingDescriptions[rating];
+                });
+            });
+        }
+
+        // تحديث نجوم التقييم
+        function updateRatingStars(rating) {
+            const starButtons = document.querySelectorAll('.rating-star-btn');
+            starButtons.forEach((button, index) => {
+                if (index < rating) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        // إغلاق مودال تعديل التقييم
+        function closeEditRatingModal() {
+            document.getElementById('editRatingModal').style.display = 'none';
+            editingQuestionId = null;
+            selectedRating = 0;
+        }
+
+        // حفظ تعديل التقييم
+        document.getElementById('editRatingForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (!editingQuestionId || selectedRating === 0) {
+                alert('يرجى اختيار تقييم صحيح');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/questions/${editingQuestionId}/rate`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        rating: selectedRating
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    closeEditRatingModal();
+                    loadRatedQuestions(); // إعادة تحميل الأسئلة
+                    showSuccessMessage('تم تحديث التقييم بنجاح');
+                } else {
+                    alert('فشل في تحديث التقييم: ' + (data.message || 'خطأ غير معروف'));
+                }
+            } catch (error) {
+                console.error('خطأ في تحديث التقييم:', error);
+                alert('خطأ في الاتصال بالخادم');
+            }
+        });
+
+        // إظهار رسالة نجاح
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #dcfce7;
+                color: #166534;
+                padding: 15px 20px;
+                border-radius: 8px;
+                border: 1px solid #bbf7d0;
+                z-index: 10000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            `;
+            successDiv.textContent = '✅ ' + message;
+            document.body.appendChild(successDiv);
+
+            setTimeout(() => {
+                document.body.removeChild(successDiv);
+            }, 3000);
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('loginSuccess');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // إغلاق المودال عند النقر خارجه
+        window.onclick = function (event) {
+            const modal = document.getElementById('editRatingModal');
+            if (event.target === modal) {
+                closeEditRatingModal();
+            }
+        }
+
+        // إضافة معالج للضغط على مفتاح Escape لإغلاق النوافذ المنبثقة
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeEditRatingModal();
+                closeImageModal();
+            }
+        });
+
+        console.log('✅ تم تحميل صفحة الأسئلة المقيمة بنجاح');
+    </script>
+</body>
+</html>

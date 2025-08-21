@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم نظام بنك الأسئلة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(106, 113, 216, 0.1);
+            margin-bottom: 30px;
+            border-right: 5px solid #6a71d8;
+        }
+
+        .header h1 {
+            color: #333333;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .main-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .nav-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(106, 113, 216, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(106, 113, 216, 0.15);
+            border-color: #6a71d8;
+        }
+
+        .nav-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-card.active {
+            border-color: #6a71d8;
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+        }
+
+        .nav-card.active::before {
+            transform: scaleX(1);
+        }
+
+        .nav-card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            color: #6a71d8;
+            transition: all 0.3s ease;
+        }
+
+        .nav-card.active .nav-card-icon {
+            color: white;
+        }
+
+        .nav-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .nav-card p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .form-container {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(106, 113, 216, 0.1);
+            margin-top: 30px;
+        }
+
+        .form-container.active {
+            display: block;
+            animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            border-bottom: 2px solid #f5f7fa;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            color: #333333;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-header .subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333333;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #6a71d8;
+            box-shadow: 0 0 0 3px rgba(106, 113, 216, 0.1);
+            transform: translateY(-1px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(106, 113, 216, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #f5f7fa;
+            color: #333333;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            border-color: #6a71d8;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #f5f7fa;
+        }
+
+        .success-message, .error-message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #6a71d8;
+        }
+
+        .spinner {
+            border: 3px solid #f5f7fa;
+            border-top: 3px solid #6a71d8;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .dependent-select {
+            position: relative;
+        }
+
+        .dependent-select select:disabled {
+            background: #f5f7fa;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(106, 113, 216, 0.08);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #6a71d8;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏫 نظام إدارة بنك الأسئلة</h1>
+            <p>إدارة شاملة للوحدات والدروس والتصنيفات</p>
+        </header>
+
+        <!-- إحصائيات سريعة -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-number" id="unitsCount">-</div>
+                <div class="stat-label">الوحدات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lessonsCount">-</div>
+                <div class="stat-label">الدروس</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="mainTopicsCount">-</div>
+                <div class="stat-label">التصنيفات الرئيسية</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="subTopicsCount">-</div>
+                <div class="stat-label">التصنيفات الفرعية</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="questionsCount">-</div>
+                <div class="stat-label">الأسئلة</div>
+            </div>
+        </div>
+
+        <!-- قائمة التنقل الرئيسية -->
+        <div class="main-nav">
+            <div class="nav-card" data-form="units">
+                <span class="nav-card-icon"></span>
+                <h3>إنشاء وحدة جديدة</h3>
+                <p>إضافة وحدة دراسية جديدة مثل الرياضيات أو العلوم</p>
+            </div>
+            
+            <div class="nav-card" data-form="lessons">
+                <span class="nav-card-icon"></span>
+                <h3>إنشاء درس جديد</h3>
+                <p>إضافة درس جديد ضمن إحدى الوحدات الموجودة</p>
+            </div>
+            
+            <div class="nav-card" data-form="main-topics">
+                <span class="nav-card-icon">🏷️</span>
+                <h3>إنشاء تصنيف رئيسي</h3>
+                <p>إضافة موضوع رئيسي ضمن درس معين</p>
+            </div>
+            
+            <div class="nav-card" data-form="sub-topics">
+                <span class="nav-card-icon">🔖</span>
+                <h3>إنشاء تصنيف فرعي</h3>
+                <p>إضافة موضوع فرعي تحت تصنيف رئيسي</p>
+            </div>
+        </div>
+
+        <!-- نموذج إنشاء وحدة -->
+        <div class="form-container" id="units-form">
+            <div class="form-header">
+                <h2> إنشاء وحدة دراسية جديدة</h2>
+                <p class="subtitle">الوحدة هي المستوى الأعلى في التصنيف (مثل: الرياضيات، العلوم، اللغة العربية)</p>
+            </div>
+            
+            <div class="success-message" id="units-success"></div>
+            <div class="error-message" id="units-error"></div>
+            <div class="loading" id="units-loading">
+                <div class="spinner"></div>
+                <p>جاري إنشاء الوحدة...</p>
+            </div>
+            
+            <form id="unitForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="unitName">اسم الوحدة *</label>
+                        <input type="text" id="unitName" name="name" required 
+                               placeholder="مثال: الرياضيات">
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="unitDescription">وصف الوحدة</label>
+                    <textarea id="unitDescription" name="description" 
+                              placeholder="وصف مختصر عن محتوى الوحدة وأهدافها التعليمية"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm('units')">
+                        🔄 إعادة تعيين
+                    </button>
+                    <button type="submit" class="btn">
+                        ✅ إنشاء الوحدة
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- نموذج إنشاء درس -->
+        <div class="form-container" id="lessons-form">
+            <div class="form-header">
+                <h2> إنشاء درس جديد</h2>
+                <p class="subtitle">الدرس ينتمي إلى وحدة معينة (مثل: الجمع والطرح في وحدة الرياضيات)</p>
+            </div>
+            
+            <div class="success-message" id="lessons-success"></div>
+            <div class="error-message" id="lessons-error"></div>
+            <div class="loading" id="lessons-loading">
+                <div class="spinner"></div>
+                <p>جاري إنشاء الدرس...</p>
+            </div>
+            
+            <form id="lessonForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="lessonUnit">الوحدة الدراسية *</label>
+                        <select id="lessonUnit" name="unit_id" required>
+                            <option value="">اختر الوحدة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lessonName">اسم الدرس *</label>
+                        <input type="text" id="lessonName" name="name" required 
+                               placeholder="مثال: الجمع والطرح">
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="lessonDescription">وصف الدرس</label>
+                    <textarea id="lessonDescription" name="description" 
+                              placeholder="وصف محتوى الدرس والمهارات التي سيتعلمها الطالب"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm('lessons')">
+                        🔄 إعادة تعيين
+                    </button>
+                    <button type="submit" class="btn">
+                        ✅ إنشاء الدرس
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- نموذج إنشاء تصنيف رئيسي -->
+        <div class="form-container" id="main-topics-form">
+            <div class="form-header">
+                <h2>🏷️ إنشاء تصنيف رئيسي</h2>
+                <p class="subtitle">التصنيف الرئيسي يساعد في تنظيم الأسئلة ضمن الدرس</p>
+            </div>
+            
+            <div class="success-message" id="main-topics-success"></div>
+            <div class="error-message" id="main-topics-error"></div>
+            <div class="loading" id="main-topics-loading">
+                <div class="spinner"></div>
+                <p>جاري إنشاء التصنيف...</p>
+            </div>
+            
+            <form id="mainTopicForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="mainTopicUnit">الوحدة الدراسية *</label>
+                        <select id="mainTopicUnit" name="unit_id" required>
+                            <option value="">اختر الوحدة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group dependent-select">
+                        <label for="mainTopicLesson">الدرس *</label>
+                        <select id="mainTopicLesson" name="lesson_id" required disabled>
+                            <option value="">اختر الدرس</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="mainTopicName">اسم التصنيف الرئيسي *</label>
+                        <input type="text" id="mainTopicName" name="name" required 
+                               placeholder="مثال: جمع الأعداد الصحيحة">
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="mainTopicDescription">وصف التصنيف</label>
+                    <textarea id="mainTopicDescription" name="description" 
+                              placeholder="وصف مختصر عن نوع الأسئلة التي ستندرج تحت هذا التصنيف"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm('main-topics')">
+                        🔄 إعادة تعيين
+                    </button>
+                    <button type="submit" class="btn">
+                        ✅ إنشاء التصنيف الرئيسي
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- نموذج إنشاء تصنيف فرعي -->
+        <div class="form-container" id="sub-topics-form">
+            <div class="form-header">
+                <h2>🔖 إنشاء تصنيف فرعي</h2>
+                <p class="subtitle">التصنيف الفرعي يوفر مستوى إضافي من التنظيم تحت التصنيف الرئيسي</p>
+            </div>
+            
+            <div class="success-message" id="sub-topics-success"></div>
+            <div class="error-message" id="sub-topics-error"></div>
+            <div class="loading" id="sub-topics-loading">
+                <div class="spinner"></div>
+                <p>جاري إنشاء التصنيف الفرعي...</p>
+            </div>
+            
+            <form id="subTopicForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="subTopicUnit">الوحدة الدراسية *</label>
+                        <select id="subTopicUnit" name="unit_id" required>
+                            <option value="">اختر الوحدة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group dependent-select">
+                        <label for="subTopicLesson">الدرس *</label>
+                        <select id="subTopicLesson" name="lesson_id" required disabled>
+                            <option value="">اختر الدرس</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group dependent-select">
+                        <label for="subTopicMainTopic">التصنيف الرئيسي *</label>
+                        <select id="subTopicMainTopic" name="main_topic_id" required disabled>
+                            <option value="">اختر التصنيف الرئيسي</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subTopicName">اسم التصنيف الفرعي *</label>
+                        <input type="text" id="subTopicName" name="name" required 
+                               placeholder="مثال: جمع عدد من رقم واحد">
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="subTopicDescription">وصف التصنيف الفرعي</label>
+                    <textarea id="subTopicDescription" name="description" 
+                              placeholder="وصف مفصل عن نوع الأسئلة المحددة التي تندرج تحت هذا التصنيف"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm('sub-topics')">
+                        🔄 إعادة تعيين
+                    </button>
+                    <button type="submit" class="btn">
+                        ✅ إنشاء التصنيف الفرعي
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات عامة
+        let units = [];
+        let lessons = [];
+        let mainTopics = [];
+
+        // تحميل البيانات عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadUnits();
+            setupEventListeners();
+        });
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // التنقل بين النماذج
+            document.querySelectorAll('.nav-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const formType = this.dataset.form;
+                    showForm(formType);
+                });
+            });
+
+            // إرسال النماذج
+            document.getElementById('unitForm').addEventListener('submit', handleUnitSubmit);
+            document.getElementById('lessonForm').addEventListener('submit', handleLessonSubmit);
+            document.getElementById('mainTopicForm').addEventListener('submit', handleMainTopicSubmit);
+            document.getElementById('subTopicForm').addEventListener('submit', handleSubTopicSubmit);
+
+            // التبعيات بين القوائم المنسدلة
+            setupDependentSelects();
+        }
+
+        // تحميل الإحصائيات
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats/general');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('unitsCount').textContent = data.stats.counts.total_units;
+                    document.getElementById('lessonsCount').textContent = data.stats.counts.total_lessons;
+                    document.getElementById('mainTopicsCount').textContent = data.stats.counts.total_main_topics;
+                    document.getElementById('subTopicsCount').textContent = data.stats.counts.total_sub_topics;
+                    document.getElementById('questionsCount').textContent = data.stats.counts.total_questions;
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الإحصائيات:', error);
+            }
+        }
+
+        // تحميل الوحدات
+        async function loadUnits() {
+            try {
+                const response = await fetch('/api/units');
+                const data = await response.json();
+                
+                if (data.success) {
+                    units = data.units;
+                    populateUnitSelects();
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الوحدات:', error);
+            }
+        }
+
+        // ملء قوائم الوحدات المنسدلة
+        function populateUnitSelects() {
+            const selects = ['lessonUnit', 'mainTopicUnit', 'subTopicUnit'];
+            
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                select.innerHTML = '<option value="">اختر الوحدة</option>';
+                
+                units.forEach(unit => {
+                    const option = document.createElement('option');
+                    option.value = unit.id;
+                    option.textContent = unit.name;
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        // إعداد التبعيات بين القوائم
+        function setupDependentSelects() {
+            // الدروس -> الوحدات
+            ['mainTopicUnit', 'subTopicUnit'].forEach(unitSelectId => {
+                const unitSelect = document.getElementById(unitSelectId);
+                const lessonSelectId = unitSelectId.replace('Unit', 'Lesson');
+                const lessonSelect = document.getElementById(lessonSelectId);
+                
+                unitSelect.addEventListener('change', async function() {
+                    const unitId = this.value;
+                    lessonSelect.innerHTML = '<option value="">اختر الدرس</option>';
+                    lessonSelect.disabled = !unitId;
+                    
+                    if (unitId) {
+                        try {
+                            const response = await fetch(`/api/units/${unitId}/lessons`);
+                            const data = await response.json();
+                            
+                            if (data.success) {
+                                data.lessons.forEach(lesson => {
+                                    const option = document.createElement('option');
+                                    option.value = lesson.id;
+                                    option.textContent = lesson.name;
+                                    lessonSelect.appendChild(option);
+                                });
+                            }
+                        } catch (error) {
+                            console.error('خطأ في تحميل الدروس:', error);
+                        }
+                    }
+                    
+                    // إعادة تعيين التصنيفات الرئيسية إذا كان هذا للتصنيفات الفرعية
+                    if (unitSelectId === 'subTopicUnit') {
+                        const mainTopicSelect = document.getElementById('subTopicMainTopic');
+                        mainTopicSelect.innerHTML = '<option value="">اختر التصنيف الرئيسي</option>';
+                        mainTopicSelect.disabled = true;
+                    }
+                });
+            });
+
+            // التصنيفات الرئيسية -> الدروس
+            document.getElementById('subTopicLesson').addEventListener('change', async function() {
+                const lessonId = this.value;
+                const mainTopicSelect = document.getElementById('subTopicMainTopic');
+                mainTopicSelect.innerHTML = '<option value="">اختر التصنيف الرئيسي</option>';
+                mainTopicSelect.disabled = !lessonId;
+                
+                if (lessonId) {
+                    try {
+                        const response = await fetch(`/api/lessons/${lessonId}/main-topics`);
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            data.main_topics.forEach(topic => {
+                                const option = document.createElement('option');
+                                option.value = topic.id;
+                                option.textContent = topic.name;
+                                mainTopicSelect.appendChild(option);
+                            });
+                        }
+                    } catch (error) {
+                        console.error('خطأ في تحميل التصنيفات الرئيسية:', error);
+                    }
+                }
+            });
+        }
+
+        // عرض النموذج المحدد
+        function showForm(formType) {
+            // إخفاء جميع النماذج
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // إزالة التحديد من جميع البطاقات
+            document.querySelectorAll('.nav-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // إظهار النموذج المطلوب
+            document.getElementById(formType + '-form').classList.add('active');
+            
+            // تحديد البطاقة النشطة
+            document.querySelector(`[data-form="${formType}"]`).classList.add('active');
+            
+            // التمرير إلى النموذج
+            document.getElementById(formType + '-form').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // إعادة تعيين النموذج
+        function resetForm(formType) {
+            const form = document.getElementById(formType.replace('-', '') + 'Form');
+            form.reset();
+            
+            // إعادة تعيين الرسائل
+            hideMessages(formType);
+            
+            // إعادة تعيين القوائم المعتمدة
+            if (formType === 'main-topics' || formType === 'sub-topics') {
+                const lessonSelect = document.getElementById(formType.replace('-', '') + 'Lesson');
+                lessonSelect.innerHTML = '<option value="">اختر الدرس</option>';
+                lessonSelect.disabled = true;
+            }
+            
+            if (formType === 'sub-topics') {
+                const mainTopicSelect = document.getElementById('subTopicMainTopic');
+                mainTopicSelect.innerHTML = '<option value="">اختر التصنيف الرئيسي</option>';
+                mainTopicSelect.disabled = true;
+            }
+        }
+
+        // إخفاء الرسائل
+        function hideMessages(formType) {
+            document.getElementById(formType + '-success').style.display = 'none';
+            document.getElementById(formType + '-error').style.display = 'none';
+        }
+
+        // إظهار رسالة النجاح
+        function showSuccess(formType, message) {
+            const successElement = document.getElementById(formType + '-success');
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            
+            // إخفاء رسالة الخطأ
+            document.getElementById(formType + '-error').style.display = 'none';
+        }
+
+        // إظهار رسالة الخطأ
+        function showError(formType, message) {
+            const errorElement = document.getElementById(formType + '-error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            
+            // إخفاء رسالة النجاح
+            document.getElementById(formType + '-success').style.display = 'none';
+        }
+
+        // إظهار/إخفاء التحميل
+        function toggleLoading(formType, show) {
+            document.getElementById(formType + '-loading').style.display = show ? 'block' : 'none';
+        }
+
+        // معالج إرسال نموذج الوحدة
+        async function handleUnitSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            hideMessages('units');
+            toggleLoading('units', true);
+            
+            try {
+                const response = await fetch('/api/units', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('units', '✅ تم إنشاء الوحدة بنجاح!');
+                    resetForm('units');
+                    loadUnits(); // إعادة تحميل قائمة الوحدات
+                    loadStats(); // تحديث الإحصائيات
+                } else {
+                    showError('units', result.message || 'حدث خطأ أثناء إنشاء الوحدة');
+                }
+            } catch (error) {
+                showError('units', 'خطأ في الاتصال بالخادم');
+                console.error('خطأ:', error);
+            } finally {
+                toggleLoading('units', false);
+            }
+        }
+
+        // معالج إرسال نموذج الدرس
+        async function handleLessonSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            hideMessages('lessons');
+            toggleLoading('lessons', true);
+            
+            try {
+                const response = await fetch('/api/lessons', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('lessons', '✅ تم إنشاء الدرس بنجاح!');
+                    resetForm('lessons');
+                    loadStats(); // تحديث الإحصائيات
+                } else {
+                    showError('lessons', result.message || 'حدث خطأ أثناء إنشاء الدرس');
+                }
+            } catch (error) {
+                showError('lessons', 'خطأ في الاتصال بالخادم');
+                console.error('خطأ:', error);
+            } finally {
+                toggleLoading('lessons', false);
+            }
+        }
+
+        // معالج إرسال نموذج التصنيف الرئيسي
+        async function handleMainTopicSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            hideMessages('main-topics');
+            toggleLoading('main-topics', true);
+            
+            try {
+                const response = await fetch('/api/main-topics', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('main-topics', '✅ تم إنشاء التصنيف الرئيسي بنجاح!');
+                    resetForm('main-topics');
+                    loadStats(); // تحديث الإحصائيات
+                } else {
+                    showError('main-topics', result.message || 'حدث خطأ أثناء إنشاء التصنيف الرئيسي');
+                }
+            } catch (error) {
+                showError('main-topics', 'خطأ في الاتصال بالخادم');
+                console.error('خطأ:', error);
+            } finally {
+                toggleLoading('main-topics', false);
+            }
+        }
+
+        // معالج إرسال نموذج التصنيف الفرعي
+        async function handleSubTopicSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            hideMessages('sub-topics');
+            toggleLoading('sub-topics', true);
+            
+            try {
+                const response = await fetch('/api/sub-topics', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('sub-topics', '✅ تم إنشاء التصنيف الفرعي بنجاح!');
+                    resetForm('sub-topics');
+                    loadStats(); // تحديث الإحصائيات
+                } else {
+                    showError('sub-topics', result.message || 'حدث خطأ أثناء إنشاء التصنيف الفرعي');
+                }
+            } catch (error) {
+                showError('sub-topics', 'خطأ في الاتصال بالخادم');
+                console.error('خطأ:', error);
+            } finally {
+                toggleLoading('sub-topics', false);
+            }
+        }
+
+        // تحديث الإحصائيات تلقائياً كل 30 ثانية
+        setInterval(loadStats, 30000);
+
+        // إضافة تأثيرات بصرية للتفاعل
+        document.querySelectorAll('input, select, textarea').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+
+        // تأكيد قبل إعادة التعيين
+        window.resetForm = function(formType) {
+            if (confirm('هل أنت متأكد من إعادة تعيين النموذج؟ سيتم فقدان جميع البيانات المدخلة.')) {
+                resetForm(formType);
+            }
+        };
+
+        // إضافة اختصارات لوحة المفاتيح
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + Enter لإرسال النموذج النشط
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                const activeForm = document.querySelector('.form-container.active form');
+                if (activeForm) {
+                    activeForm.dispatchEvent(new Event('submit'));
+                }
+            }
+            
+            // Escape لإخفاء النماذج
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.form-container').forEach(form => {
+                    form.classList.remove('active');
+                });
+                document.querySelectorAll('.nav-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+            }
+        });
+
+        // إشعارات الحالة
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                z-index: 1000;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // تحسين تجربة الأخطاء
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('خطأ غير معالج:', e.reason);
+            showNotification('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.', 'error');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقييم الأسئلة - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.1);
+        }
+
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .filters-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #6a71d8;
+            box-shadow: 0 0 0 3px rgba(106, 113, 216, 0.1);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(106, 113, 216, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8fafc;
+            color: #666;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .questions-container {
+            display: grid;
+            gap: 25px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .question-hierarchy {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hierarchy-tag {
+            background: rgba(106, 113, 216, 0.1);
+            color: #6a71d8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .question-creator {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .question-content {
+            padding: 30px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .creator-comment {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #6a71d8;
+        }
+
+        .creator-comment-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .creator-comment-text {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .rating-section {
+            border-top: 1px solid #e2e8f0;
+            padding: 25px 30px;
+            background: #fafbfc;
+        }
+
+        .rating-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .current-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 3px;
+        }
+
+        .rating-star {
+            font-size: 20px;
+            color: #ddd;
+        }
+
+        .rating-star.filled {
+            color: #ffd700;
+        }
+
+        .rating-average {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .creator-rating {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .user-rating-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .rating-prompt {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .rating-prompt-text {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .user-rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .user-star {
+            font-size: 32px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .user-star:hover,
+        .user-star.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .rating-feedback {
+            text-align: center;
+            font-weight: 600;
+            color: #6a71d8;
+            margin-bottom: 15px;
+            min-height: 20px;
+        }
+
+        .rate-button {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .rate-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .rate-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .already-rated {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .already-rated-text {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-previous-rating {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6a71d8;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            color: #6a71d8;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .no-questions {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-questions-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .no-questions-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .no-questions-subtitle {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 350px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .message.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .navbar-container {
+                padding: 0 20px;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .page-header {
+                padding: 25px 20px;
+            }
+
+            .filters-container {
+                padding: 20px;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-content {
+                padding: 20px;
+            }
+
+            .rating-section {
+                padding: 20px;
+            }
+
+            .question-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .rating-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-role" id="userRole">مستخدم</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="Dashboard.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="users.html" class="nav-link">إدارة المستخدمين</a>
+                </li>
+                <li class="nav-item">
+                    <a href="units.html" class="nav-link">إدارة الوحدات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="lessons.html" class="nav-link">إدارة الدروس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="main-topics.html" class="nav-link">التصنيفات الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="sub-topics.html" class="nav-link">التصنيفات الفرعية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="Create_Question.html" class="nav-link">إنشاء سؤال</a>
+                </li>
+                <li class="nav-item">
+                    <a href="list.html" class="nav-link">عرض الأسئلة</a>
+                </li>
+                <li class="nav-item">
+                    <a href="user-questions-rating.html" class="nav-link active">تقييم الأسئلة</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">
+                ⭐ تقييم الأسئلة
+            </h1>
+            <p class="page-subtitle">قيم الأسئلة المتاحة وساعد في تحسين جودة المحتوى التعليمي</p>
+        </div>
+
+        <div class="filters-container">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">الوحدة</label>
+                    <select class="filter-select" id="unitFilter">
+                        <option value="">جميع الوحدات</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">الدرس</label>
+                    <select class="filter-select" id="lessonFilter" disabled>
+                        <option value="">جميع الدروس</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">نوع التقييم</label>
+                    <select class="filter-select" id="ratingFilter">
+                        <option value="">جميع الأسئلة</option>
+                        <option value="unrated">غير مقيمة</option>
+                        <option value="rated">مقيمة مسبقاً</option>
+                        <option value="high">عالية التقييم (4-5)</option>
+                        <option value="low">منخفضة التقييم (1-2)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary" onclick="applyFilters()">تطبيق الفلاتر</button>
+                <button class="btn btn-secondary" onclick="clearFilters()">مسح الفلاتر</button>
+            </div>
+        </div>
+
+        <div id="questionsContainer" class="questions-container">
+            <!-- Loading State -->
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p class="loading-text">جاري تحميل الأسئلة...</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // متغيرات عامة
+        let currentUser = null;
+        let allQuestions = [];
+        let filteredQuestions = [];
+        let userRatings = new Map(); // Store user's ratings
+        let isLoading = false;
+
+        // تحميل البيانات عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            loadUnits();
+            loadQuestions();
+            setupEventListeners();
+        });
+
+        // التحقق من صحة المصادقة
+        function checkAuth() {
+            // تعطيل مؤقت للاختبار المحلي
+            if (window.location.protocol === 'file:') {
+                currentUser = { id: 1, name: 'مستخدم تجريبي', role: 'User' };
+                updateUserInfo();
+                return;
+            }
+
+            const userData = sessionStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserInfo();
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        // تحديث معلومات المستخدم في الواجهة
+        function updateUserInfo() {
+            document.getElementById('userRole').textContent = currentUser.role === 'Admin' ? 'مدير' : 'مستخدم';
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // الفلاتر المترابطة
+            document.getElementById('unitFilter').addEventListener('change', async function () {
+                const unitId = this.value;
+                const lessonFilter = document.getElementById('lessonFilter');
+
+                lessonFilter.innerHTML = '<option value="">جميع الدروس</option>';
+                lessonFilter.disabled = !unitId;
+
+                if (unitId) {
+                    try {
+                        const response = await fetch(`http://127.0.0.1:8000/api/units/${unitId}/lessons`);
+                        const data = await response.json();
+
+                        if (data.success) {
+                            data.lessons.forEach(lesson => {
+                                const option = document.createElement('option');
+                                option.value = lesson.id;
+                                option.textContent = lesson.name;
+                                lessonFilter.appendChild(option);
+                            });
+                        }
+                    } catch (error) {
+                        console.error('خطأ في تحميل الدروس:', error);
+                    }
+                }
+
+                applyFilters();
+            });
+
+            document.getElementById('lessonFilter').addEventListener('change', applyFilters);
+            document.getElementById('ratingFilter').addEventListener('change', applyFilters);
+        }
+
+        // تحميل الوحدات
+        async function loadUnits() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/units');
+                const data = await response.json();
+
+                if (data.success) {
+                    const unitFilter = document.getElementById('unitFilter');
+                    data.units.forEach(unit => {
+                        const option = document.createElement('option');
+                        option.value = unit.id;
+                        option.textContent = unit.name;
+                        unitFilter.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الوحدات:', error);
+                showMessage('فشل في تحميل الوحدات', 'error');
+            }
+        }
+
+        // تحميل الأسئلة
+        async function loadQuestions() {
+            setLoading(true);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/questions');
+                const data = await response.json();
+
+                if (data.success) {
+                    allQuestions = data.questions;
+                    await loadUserRatings();
+                    applyFilters();
+                } else {
+                    showMessage('فشل في تحميل الأسئلة', 'error');
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الأسئلة:', error);
+                showMessage('فشل في تحميل الأسئلة', 'error');
+                allQuestions = [];
+                applyFilters();
+            }
+        }
+
+        // تحميل تقييمات المستخدم
+        async function loadUserRatings() {
+            if (!currentUser) return;
+
+            try {
+                // Load all ratings for current user (this endpoint doesn't exist in the current API)
+                // For now, we'll simulate this data
+                userRatings = new Map();
+
+                // Simulate some existing ratings
+                userRatings.set(1, 4);
+                userRatings.set(3, 5);
+            } catch (error) {
+                console.error('خطأ في تحميل تقييمات المستخدم:', error);
+            }
+        }
+        // تطبيق الفلاتر
+        function applyFilters() {
+            const unitFilter = document.getElementById('unitFilter').value;
+            const lessonFilter = document.getElementById('lessonFilter').value;
+            const ratingFilter = document.getElementById('ratingFilter').value;
+
+            filteredQuestions = allQuestions.filter(question => {
+                // فلتر الوحدة
+                if (unitFilter && question.unit.id != unitFilter) {
+                    return false;
+                }
+
+                // فلتر الدرس
+                if (lessonFilter && question.lesson.id != lessonFilter) {
+                    return false;
+                }
+
+                // فلتر التقييم
+                if (ratingFilter) {
+                    const hasUserRating = userRatings.has(question.id);
+                    switch (ratingFilter) {
+                        case 'unrated':
+                            if (hasUserRating) return false;
+                            break;
+                        case 'rated':
+                            if (!hasUserRating) return false;
+                            break;
+                        case 'high':
+                            if (question.average_rating < 4) return false;
+                            break;
+                        case 'low':
+                            if (question.average_rating > 2) return false;
+                            break;
+                    }
+                }
+
+                return true;
+            });
+
+            displayQuestions();
+        }
+
+        // مسح الفلاتر
+        function clearFilters() {
+            document.getElementById('unitFilter').value = '';
+            document.getElementById('lessonFilter').value = '';
+            document.getElementById('lessonFilter').disabled = true;
+            document.getElementById('ratingFilter').value = '';
+
+            filteredQuestions = [...allQuestions];
+            displayQuestions();
+        }
+
+        // عرض الأسئلة
+        function displayQuestions() {
+            const container = document.getElementById('questionsContainer');
+
+            if (filteredQuestions.length === 0) {
+                container.innerHTML = `
+                   <div class="no-questions">
+                       <div class="no-questions-icon">📝</div>
+                       <div class="no-questions-text">لا توجد أسئلة متاحة</div>
+                       <div class="no-questions-subtitle">جرب تغيير الفلاتر أو إضافة أسئلة جديدة</div>
+                   </div>
+               `;
+                return;
+            }
+
+            container.innerHTML = filteredQuestions.map(question => createQuestionCard(question)).join('');
+        }
+
+        // إنشاء كارت السؤال
+        function createQuestionCard(question) {
+            const hasUserRating = userRatings.has(question.id);
+            const userRating = userRatings.get(question.id) || 0;
+            const createdDate = new Date(question.created_at).toLocaleDateString('ar-SA');
+
+            return `
+               <div class="question-card" data-question-id="${question.id}">
+                   <div class="question-header">
+                       <div class="question-meta">
+                           <div class="question-hierarchy">
+                               <span class="hierarchy-tag">${question.unit.name}</span>
+                               <span class="hierarchy-tag">${question.lesson.name}</span>
+                           </div>
+                           <div class="question-creator">
+                               بواسطة: ${question.user.name} • ${createdDate}
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="question-content">
+                       ${question.text ? `<div class="question-text">${question.text}</div>` : ''}
+                       
+                       ${question.image ? `<img src="http://127.0.0.1:8000/storage/${question.image}" alt="صورة السؤال" class="question-image">` : ''}
+                       
+                       ${question.answer ? `<div class="answer-section"><div class="answer-label">الحل:</div><img src="http://127.0.0.1:8000/storage/${question.answer}" alt="صورة الحل" class="answer-image"></div>` : ''}
+                       
+                       ${question.comment ? `
+                           <div class="creator-comment">
+                               <div class="creator-comment-label">تعليق المنشئ:</div>
+                               <div class="creator-comment-text">${question.comment}</div>
+                           </div>
+                       ` : ''}
+                   </div>
+
+                   <div class="rating-section">
+                       <div class="rating-info">
+                           <div class="current-rating">
+                               <div class="rating-stars">
+                                   ${generateStarDisplay(question.average_rating || 0)}
+                               </div>
+                              <span class="rating-average">${Number(question.average_rating || 0).toFixed(1)}</span>
+                               <span class="rating-count">(${question.rating_count || 0} تقييم)</span>
+                           </div>
+                           <div class="creator-rating">
+                               تقييم المنشئ: ${question.rating}/5
+                           </div>
+                       </div>
+
+                       <div class="user-rating-container">
+                           ${hasUserRating ? `
+                               <div class="already-rated">
+                                   <div class="already-rated-text">تم تقييم هذا السؤال مسبقاً</div>
+                                   <div class="user-previous-rating">
+                                       ${generateStarDisplay(userRating)}
+                                   </div>
+                               </div>
+                           ` : `
+                               <div class="rating-prompt">
+                                   <div class="rating-prompt-text">قيم هذا السؤال</div>
+                                   <div class="user-rating-stars" data-question-id="${question.id}">
+                                       ${generateUserStars()}
+                                   </div>
+                                   <div class="rating-feedback" id="feedback-${question.id}"></div>
+                                   <button class="rate-button" id="rate-btn-${question.id}" onclick="submitRating(${question.id})" disabled>
+                                       تقييم السؤال
+                                   </button>
+                               </div>
+                           `}
+                       </div>
+                   </div>
+               </div>
+           `;
+        }
+
+        // توليد عرض النجوم للتقييم
+        function generateStarDisplay(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<span class="rating-star filled">★</span>';
+                } else {
+                    stars += '<span class="rating-star">★</span>';
+                }
+            }
+            return stars;
+        }
+
+        // توليد نجوم التقييم للمستخدم
+        function generateUserStars() {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<span class="user-star" data-rating="${i}" onclick="selectRating(this)">★</span>`;
+            }
+            return stars;
+        }
+
+        // اختيار التقييم
+        function selectRating(starElement) {
+            const questionId = starElement.closest('[data-question-id]').dataset.questionId;
+            const rating = parseInt(starElement.dataset.rating);
+            const starsContainer = starElement.parentElement;
+            const feedbackElement = document.getElementById(`feedback-${questionId}`);
+            const rateButton = document.getElementById(`rate-btn-${questionId}`);
+
+            // تحديث عرض النجوم
+            const stars = starsContainer.querySelectorAll('.user-star');
+            stars.forEach((star, index) => {
+                star.classList.toggle('active', index < rating);
+            });
+
+            // تحديث النص التوضيحي
+            const ratingTexts = {
+                1: 'ضعيف',
+                2: 'مقبول',
+                3: 'جيد',
+                4: 'جيد جداً',
+                5: 'ممتاز'
+            };
+            feedbackElement.textContent = ratingTexts[rating];
+
+            // تفعيل زر التقييم
+            rateButton.disabled = false;
+            rateButton.dataset.rating = rating;
+        }
+
+        // إرسال التقييم
+        async function submitRating(questionId) {
+            const rateButton = document.getElementById(`rate-btn-${questionId}`);
+            const rating = parseInt(rateButton.dataset.rating);
+
+            if (!rating || !currentUser) {
+                showMessage('خطأ في البيانات', 'error');
+                return;
+            }
+
+            rateButton.disabled = true;
+            rateButton.textContent = 'جاري التقييم...';
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/questions/${questionId}/rate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        rating: rating
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    userRatings.set(questionId, rating);
+                    const question = allQuestions.find(q => q.id == questionId);
+                    if (question) {
+                        question.average_rating = Number(result.average_rating || 0);
+                        question.rating_count = Number(result.rating_count || 0);
+                    }
+                    applyFilters();
+                    showMessage('تم تقييم السؤال بنجاح!', 'success');
+                } else {
+                    throw new Error(result.message || 'فشل في إرسال التقييم');
+                }
+            } catch (error) {
+                console.error('خطأ في إرسال التقييم:', error);
+
+                if (window.location.protocol === 'file:') {
+                    userRatings.set(questionId, rating);
+                    const question = allQuestions.find(q => q.id == questionId);
+                    if (question) {
+                        question.rating_count = (question.rating_count || 0) + 1;
+                        const currentAvg = Number(question.average_rating || 0);
+                        const currentCount = Number(question.rating_count || 0);
+                        question.average_rating = Number(((currentAvg * (currentCount - 1)) + rating) / currentCount);
+
+                        // Additional fix - ensure all questions have proper numeric values when loaded:
+                        // In loadQuestions function, after getting the data:
+                        if (data.success) {
+                            allQuestions = data.questions.map(question => ({
+                                ...question,
+                                average_rating: Number(question.average_rating || 0),
+                                rating_count: Number(question.rating_count || 0),
+                                rating: Number(question.rating || 0)
+                            }));
+                            await loadUserRatings();
+                            applyFilters();
+                        }
+                    }
+                    applyFilters();
+                    showMessage('تم تقييم السؤال بنجاح!', 'success');
+                } else {
+                    showMessage('فشل في إرسال التقييم', 'error');
+                    rateButton.disabled = false;
+                    rateButton.textContent = 'تقييم السؤال';
+                }
+            }
+        }
+
+        // تعيين حالة التحميل
+        function setLoading(loading) {
+            isLoading = loading;
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            if (loading) {
+                loadingIndicator.style.display = 'block';
+            } else {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        // عرض الرسائل
+        function showMessage(text, type = 'success') {
+            const existingMessages = document.querySelectorAll('.message');
+            existingMessages.forEach(msg => msg.remove());
+
+            const message = document.createElement('div');
+            message.className = `message ${type}`;
+            message.textContent = text;
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                message.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                message.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(message)) {
+                        document.body.removeChild(message);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        }
+
+        console.log('✅ تم تحميل صفحة تقييم الأسئلة بنجاح');
+    </script>
+</body>
+</html>

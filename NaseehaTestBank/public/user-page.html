@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الرئيسية - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(106, 113, 216, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6, #6a71d8);
+            background-size: 200% 100%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .welcome-title {
+            font-size: 42px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6a71d8, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 20px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .stats-container {
+            margin-bottom: 50px;
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-title {
+            font-size: 28px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .stats-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(106, 113, 216, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(106, 113, 216, 0.15);
+            border-color: #6a71d8;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-icon.users {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-icon.units {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .stat-icon.lessons {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-icon.topics {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .stat-icon.questions {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .stat-icon.subtopics {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .stat-action {
+            margin-top: 15px;
+        }
+
+        .stat-action .action-btn {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-action .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .stat-action .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(106, 113, 216, 0.3);
+        }
+
+        .stat-action .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .stat-action .action-btn.secondary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-action .action-btn.secondary:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading-stat {
+            color: #6a71d8;
+            font-size: 20px;
+        }
+
+
+
+
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #fecaca;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #bbf7d0;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .welcome-section {
+                padding: 40px 20px;
+            }
+
+            .welcome-title {
+                font-size: 32px;
+            }
+
+            .welcome-subtitle {
+                font-size: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-action {
+            background-color: #8b6bf0;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        .stat-action a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* إضافة أنيميشن للدوران */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* حالة عدم الاتصال */
+        .offline .header {
+            filter: grayscale(50%);
+        }
+
+        .offline .stat-card {
+            opacity: 0.7;
+        }
+
+        /* تحسينات إضافية للموبايل */
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 24px;
+            }
+
+            .welcome-subtitle {
+                font-size: 14px;
+            }
+
+            .stat-card {
+                padding: 25px 15px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .stat-action .action-btn {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-name" id="userName">مستخدم</div>
+                    <div class="user-role" id="userRole">مستخدم</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="stats-container">
+            <div class="stats-grid" id="statsGrid">
+                <!-- بطاقة إنشاء سؤال جديد -->
+                <div class="stat-card" onclick="navigateToCreateQuestion()">
+                    <div class="stat-icon questions">➕</div>
+                    <div class="stat-number">إنشاء</div>
+                    <div class="stat-action">
+                        <a href="user-create-questions.html" class="action-btn">إنشاء سؤال</a>
+                    </div>
+                </div>
+
+                <!-- بطاقة الأسئلة التي أنشأتها -->
+                <div class="stat-card">
+                    <div class="stat-icon users">📝</div>
+                    <div class="stat-number loading-stat" id="createdQuestionsCount">...</div>
+                    <div class="stat-label">الأسئلة التي أنشأتها</div>
+                    <div class="stat-action">
+                        <a href="user-created-questions.html" class="action-btn">عرض أسئلتي</a>
+                    </div>
+                </div>
+
+                <!-- بطاقة الأسئلة المقيمة -->
+                <div class="stat-card">
+                    <div class="stat-icon units">⭐</div>
+                    <div class="stat-number loading-stat" id="ratedQuestionsCount">...</div>
+                    <div class="stat-label">الأسئلة المقيمة</div>
+                    <div class="stat-action">
+                        <a href="user-rated-questions.html" class="action-btn">عرض المقيمة</a>
+                    </div>
+                </div>
+
+                <!-- بطاقة الأسئلة غير المقيمة -->
+                <div class="stat-card">
+                    <div class="stat-icon lessons">❓</div>
+                    <div class="stat-number loading-stat" id="unratedQuestionsCount">...</div>
+                    <div class="stat-label">أسئلة بانتظار التقييم</div>
+                    <div class="stat-action">
+                        <a href="user-unrated-questions.html" class="action-btn">قيم الأسئلة</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+        let currentUser = null;
+        let userRatings = new Map();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            loadUserStats();
+        });
+
+        function checkAuth() {
+            const userData = sessionStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserInfo();
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        function updateUserInfo() {
+            if (!currentUser) return;
+
+            document.getElementById('userName').textContent = currentUser.name || 'مستخدم';
+            document.getElementById('userRole').textContent = currentUser.role === 'Admin' ? 'مدير' : 'مستخدم';
+        }
+
+        async function loadUserStats() {
+            if (!currentUser) return;
+
+            try {
+                // تحميل الأسئلة التي أنشأها المستخدم
+                await loadCreatedQuestions();
+
+                // تحميل جميع الأسئلة لحساب المقيمة وغير المقيمة
+                await loadAllQuestionsForRating();
+
+            } catch (error) {
+                console.error('خطأ في تحميل الإحصائيات:', error);
+                showError();
+            }
+        }
+
+        async function loadCreatedQuestions() {
+            try {
+                const response = await fetch(`${API_URL}/users/${currentUser.id}/questions`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const createdCount = data.stats.total_questions || 0;
+
+                    const createdElement = document.getElementById('createdQuestionsCount');
+                    if (createdElement) {
+                        createdElement.textContent = createdCount;
+                    }
+                } else {
+                    const createdElement = document.getElementById('createdQuestionsCount');
+                    if (createdElement) {
+                        createdElement.textContent = '0';
+                    }
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الأسئلة المنشأة:', error);
+                const createdElement = document.getElementById('createdQuestionsCount');
+                if (createdElement) {
+                    createdElement.textContent = '0';
+                }
+            }
+        }
+
+        async function loadAllQuestionsForRating() {
+            try {
+                // تحميل جميع الأسئلة
+                const questionsResponse = await fetch(`${API_URL}/questions`);
+                const questionsData = await questionsResponse.json();
+
+                if (questionsData.success) {
+                    const allQuestions = questionsData.questions;
+
+                    // فلترة الأسئلة (استبعاد أسئلة المستخدم نفسه)
+                    const otherUsersQuestions = allQuestions.filter(q => q.user_id !== currentUser.id);
+
+                    // محاكاة تحديد الأسئلة المقيمة (يمكن تحسينها لاحقاً)
+                    await checkUserRatings(otherUsersQuestions);
+
+                } else {
+                    const ratedElement = document.getElementById('ratedQuestionsCount');
+                    const unratedElement = document.getElementById('unratedQuestionsCount');
+
+                    if (ratedElement) ratedElement.textContent = '0';
+                    if (unratedElement) unratedElement.textContent = '0';
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل أسئلة التقييم:', error);
+                const ratedElement = document.getElementById('ratedQuestionsCount');
+                const unratedElement = document.getElementById('unratedQuestionsCount');
+
+                if (ratedElement) ratedElement.textContent = '0';
+                if (unratedElement) unratedElement.textContent = '0';
+            }
+        }
+
+        async function checkUserRatings(questions) {
+            let ratedCount = 0;
+            let unratedCount = 0;
+
+            // محاكاة فحص التقييمات - في التطبيق الحقيقي نحتاج endpoint مخصص
+            for (let question of questions) {
+                try {
+                    const ratingsResponse = await fetch(`${API_URL}/questions/${question.id}/ratings`);
+                    const ratingsData = await ratingsResponse.json();
+
+                    if (ratingsData.success && ratingsData.ratings) {
+                        const userRating = ratingsData.ratings.find(rating => rating.user_id === currentUser.id);
+
+                        if (userRating) {
+                            ratedCount++;
+                            userRatings.set(question.id, userRating.rating);
+                        } else {
+                            unratedCount++;
+                        }
+                    } else {
+                        unratedCount++;
+                    }
+                } catch (error) {
+                    // في حالة الخطأ، نعتبر السؤال غير مقيم
+                    unratedCount++;
+                }
+            }
+
+            // تحديث العدادات
+            const ratedElement = document.getElementById('ratedQuestionsCount');
+            const unratedElement = document.getElementById('unratedQuestionsCount');
+
+            if (ratedElement) ratedElement.textContent = ratedCount;
+            if (unratedElement) unratedElement.textContent = unratedCount;
+
+            // حفظ البيانات للصفحات الأخرى
+            sessionStorage.setItem('userRatings', JSON.stringify(Array.from(userRatings.entries())));
+            sessionStorage.setItem('ratedQuestionsCount', ratedCount.toString());
+            sessionStorage.setItem('unratedQuestionsCount', unratedCount.toString());
+        }
+
+        function showError() {
+            const elements = ['createdQuestionsCount', 'ratedQuestionsCount', 'unratedQuestionsCount', 'averageRating'];
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = 'خطأ';
+                    element.style.color = '#dc2626';
+                }
+            });
+        }
+
+        function navigateToCreateQuestion() {
+            window.location.href = '/user-create-questions.html';
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('loginSuccess');
+                sessionStorage.removeItem('userRatings');
+                sessionStorage.removeItem('ratedQuestionsCount');
+                sessionStorage.removeItem('unratedQuestionsCount');
+                window.location.href = 'login.html';
+            }
+        }
+
+        console.log('✅ تم تحميل الصفحة الرئيسية للمستخدم بنجاح');
+    </script>
+</body>
+
+</html>

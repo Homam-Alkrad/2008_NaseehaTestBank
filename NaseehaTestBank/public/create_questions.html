@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء سؤال جديد - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.1);
+        }
+
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px 40px;
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .form-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-content {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #6a71d8;
+            box-shadow: 0 0 0 3px rgba(106, 113, 216, 0.1);
+        }
+
+        input:disabled, select:disabled {
+            background-color: #f8fafc;
+            cursor: not-allowed;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            font-size: 28px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .rating-text {
+            font-weight: 600;
+            color: #6a71d8;
+            font-size: 16px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .message {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6a71d8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #6a71d8;
+            font-weight: 600;
+        }
+
+        /* Image Upload Styles */
+        .image-upload-container {
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .image-upload-container:hover {
+            border-color: #6a71d8;
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .image-upload-container.dragover {
+            border-color: #6a71d8;
+            background: rgba(106, 113, 216, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: #6a71d8;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .image-preview {
+            display: none;
+            position: relative;
+            max-width: 300px;
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .remove-image:hover {
+            background: rgba(220, 38, 38, 1);
+            transform: scale(1.1);
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .navbar-container {
+                padding: 0 20px;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .page-header,
+            .form-content {
+                padding: 25px 20px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rating-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .stars {
+                align-self: stretch;
+                justify-content: center;
+            }
+        }
+
+        /* Additional styles for enhanced UX */
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input:focus + label::after,
+        .form-group select:focus + label::after,
+        .form-group textarea:focus + label::after {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(135deg, #6a71d8, #8b5cf6);
+            border-radius: 2px;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .message {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-role" id="userRole">مدير</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="Dashboard.html" class="nav-link"> الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="users.html" class="nav-link"> إدارة المستخدمين</a>
+                </li>
+                <li class="nav-item">
+                    <a href="units.html" class="nav-link"> إدارة الوحدات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="lessons.html" class="nav-link"> إدارة الدروس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="main-topics.html" class="nav-link"> التصنيفات الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="sub-topics.html" class="nav-link"> التصنيفات الفرعية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="create_questions.html" class="nav-link active"> إنشاء سؤال</a>
+                </li>
+                <li class="nav-item">
+                    <a href="list.html" class="nav-link"> عرض الأسئلة</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+<main class="main-content">
+        <div class="form-container">
+            <div class="form-content">
+                <div class="message success" id="successMessage"></div>
+                <div class="message error" id="errorMessage"></div>
+                
+                <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <p class="loading-text">جاري إنشاء السؤال...</p>
+                </div>
+
+                <form id="questionForm">
+                    <!-- نص السؤال -->
+                    <div class="form-group">
+                        <label for="questionText">نص السؤال (اختياري)</label>
+                        <textarea id="questionText" name="text" 
+                                  placeholder="اكتب نص السؤال هنا..."></textarea>
+                    </div>
+
+                    <!-- رفع صورة السؤال -->
+                    <div class="form-group">
+                        <label>صورة السؤال (اختياري)</label>
+                        <div class="image-upload-container" onclick="document.getElementById('imageInput').click()">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-text">انقر لرفع صورة أو اسحب الملف هنا</div>
+                            <div class="upload-subtext">PNG, JPG, GIF حتى 5MB</div>
+                        </div>
+                        <input type="file" id="imageInput" name="image" accept="image/*">
+                        <div class="image-preview" id="imagePreview">
+                            <img class="preview-image" id="previewImg" src="" alt="معاينة الصورة">
+                            <button type="button" class="remove-image" onclick="removeImage()">×</button>
+                        </div>
+                    </div>
+
+                    <!-- رفع صورة الإجابة -->
+                    <div class="form-group">
+                        <label>صورة الإجابة (اختياري)</label>
+                        <div class="image-upload-container" onclick="document.getElementById('answerInput').click()">
+                            <div class="upload-icon">📝</div>
+                            <div class="upload-text">انقر لرفع صورة الإجابة أو اسحب الملف هنا</div>
+                            <div class="upload-subtext">PNG, JPG, GIF حتى 5MB</div>
+                        </div>
+                        <input type="file" id="answerInput" name="answer" accept="image/*">
+                        <div class="image-preview" id="answerPreview">
+                            <img class="preview-image" id="answerPreviewImg" src="" alt="معاينة الإجابة">
+                            <button type="button" class="remove-image" onclick="removeAnswer()">×</button>
+                        </div>
+                    </div>
+
+                    <!-- التصنيف الهرمي -->
+                    <div class="grid">
+                        <div class="form-group">
+                            <label for="unitSelect">الوحدة <span class="required">*</span></label>
+                            <select id="unitSelect" name="unit_id" required>
+                                <option value="">اختر الوحدة</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lessonSelect">الدرس <span class="required">*</span></label>
+                            <select id="lessonSelect" name="lesson_id" required disabled>
+                                <option value="">اختر الدرس</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label for="mainTopicSelect">التصنيف الرئيسي</label>
+                            <select id="mainTopicSelect" name="main_topic_id" disabled>
+                                <option value="">اختر التصنيف الرئيسي</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subTopicSelect">التصنيف الفرعي</label>
+                            <select id="subTopicSelect" name="sub_topic_id" disabled>
+                                <option value="">اختر التصنيف الفرعي</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- التقييم -->
+                    <div class="form-group">
+                        <label>تقييم السؤال <span class="required">*</span></label>
+                        <div class="rating-container">
+                            <div class="stars" id="starRating">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
+                            </div>
+                            <span class="rating-text" id="ratingText">لم يتم التقييم</span>
+                        </div>
+                        <input type="hidden" id="ratingValue" name="rating" required>
+                    </div>
+
+                    <!-- التعليق -->
+                    <div class="form-group">
+                        <label for="questionComment">تعليق أو ملاحظة</label>
+                        <textarea id="questionComment" name="creator_comment" 
+                                  placeholder="أضف تعليقاً أو ملاحظة حول السؤال..."></textarea>
+                    </div>
+
+                    <!-- معرف المستخدم المخفي -->
+                    <input type="hidden" name="user_id" value="1">
+
+                    <button type="submit" class="btn" id="submitButton">
+                        ✅ إنشاء السؤال
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+     <script>
+        // متغيرات عامة
+        let currentRating = 0;
+        let isLoading = false;
+        let currentUser = null;
+        let selectedImageFile = null;
+        let selectedAnswerFile = null;
+
+        // تحميل البيانات عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadUnits();
+            setupEventListeners();
+            setupImageUpload();
+        });
+
+        // التحقق من صحة المصادقة
+        function checkAuth() {
+            // تعطيل مؤقت للاختبار المحلي
+            if (window.location.protocol === 'file:') {
+                currentUser = { name: 'مستخدم تجريبي', role: 'Admin' };
+                updateUserInfo();
+                return;
+            }
+
+            const userData = sessionStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserInfo();
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        // تحديث معلومات المستخدم في الواجهة
+        function updateUserInfo() {
+            document.getElementById('userRole').textContent = currentUser.role === 'Admin' ? 'مدير' : 'مستخدم';
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // إرسال النموذج
+            document.getElementById('questionForm').addEventListener('submit', handleSubmit);
+            
+            // التقييم بالنجوم
+            setupStarRating();
+            
+            // القوائم المترابطة
+            setupDependentSelects();
+        }
+
+        // إعداد رفع الصور
+        function setupImageUpload() {
+            const imageInput = document.getElementById('imageInput');
+            const answerInput = document.getElementById('answerInput');
+            const uploadContainers = document.querySelectorAll('.image-upload-container');
+            
+            // معالجة اختيار الملف للسؤال
+            imageInput.addEventListener('change', function(e) {
+                handleImageSelect(e, 'question');
+            });
+            
+            // معالجة اختيار الملف للإجابة
+            answerInput.addEventListener('change', function(e) {
+                handleImageSelect(e, 'answer');
+            });
+            
+            // معالجة السحب والإفلات
+            uploadContainers.forEach(container => {
+                container.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('dragover');
+                });
+                
+                container.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                });
+                
+                container.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                    
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        const file = files[0];
+                        if (file.type.startsWith('image/')) {
+                            const isAnswer = this.onclick.toString().includes('answerInput');
+                            if (isAnswer) {
+                                answerInput.files = files;
+                                handleImageSelect({ target: answerInput }, 'answer');
+                            } else {
+                                imageInput.files = files;
+                                handleImageSelect({ target: imageInput }, 'question');
+                            }
+                        } else {
+                            showError('يرجى اختيار ملف صورة صالح');
+                        }
+                    }
+                });
+            });
+        }
+
+        // معالجة اختيار الصورة
+        function handleImageSelect(e, type) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // التحقق من نوع الملف
+            if (!file.type.startsWith('image/')) {
+                showError('يرجى اختيار ملف صورة صالح');
+                return;
+            }
+            
+            // التحقق من حجم الملف (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showError('حجم الصورة كبير جداً. يرجى اختيار صورة أصغر من 5MB');
+                return;
+            }
+            
+            if (type === 'question') {
+                selectedImageFile = file;
+                
+                // عرض معاينة الصورة
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewImg = document.getElementById('previewImg');
+                    const imagePreview = document.getElementById('imagePreview');
+                    
+                    previewImg.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else if (type === 'answer') {
+                selectedAnswerFile = file;
+                
+                // عرض معاينة الصورة
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const answerPreviewImg = document.getElementById('answerPreviewImg');
+                    const answerPreview = document.getElementById('answerPreview');
+                    
+                    answerPreviewImg.src = e.target.result;
+                    answerPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // حذف صورة السؤال
+        function removeImage() {
+            selectedImageFile = null;
+            document.getElementById('imageInput').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('previewImg').src = '';
+        }
+
+        // حذف صورة الإجابة
+        function removeAnswer() {
+            selectedAnswerFile = null;
+            document.getElementById('answerInput').value = '';
+            document.getElementById('answerPreview').style.display = 'none';
+            document.getElementById('answerPreviewImg').src = '';
+        }
+
+        // تحميل الوحدات
+        async function loadUnits() {
+            try {
+                const apiUrls = [
+                    'http://127.0.0.1:8000/api/units',
+                    'http://127.0.0.1:8000/api/units',
+                    '/api/units'
+                ];
+                
+                let response;
+                let lastError;
+                
+                for (const url of apiUrls) {
+                    try {
+                        response = await fetch(url, {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            break;
+                        }
+                    } catch (err) {
+                        lastError = err;
+                        continue;
+                    }
+                }
+                
+                if (!response || !response.ok) {
+                    throw lastError || new Error('فشل في الاتصال بالخادم');
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    populateSelect('unitSelect', data.units, 'اختر الوحدة');
+                } else {
+                    showError('فشل في تحميل الوحدات: ' + (data.message || 'خطأ غير معروف'));
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الوحدات:', error);
+                showError('فشل في تحميل الوحدات. تأكد من تشغيل الخادم على http://127.0.0.1:8000');
+                
+                // Add sample data for testing
+                const sampleUnits = [
+                    { id: 1, name: 'الرياضيات' },
+                    { id: 2, name: 'العلوم' },
+                    { id: 3, name: 'اللغة العربية' }
+                ];
+                populateSelect('unitSelect', sampleUnits, 'اختر الوحدة (بيانات تجريبية)');
+            }
+        }
+
+        // ملء القائمة المنسدلة
+        function populateSelect(selectId, items, defaultText) {
+            const select = document.getElementById(selectId);
+            select.innerHTML = `<option value="">${defaultText}</option>`;
+            
+            items.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.name;
+                select.appendChild(option);
+            });
+        }
+
+        // إعداد القوائم المترابطة
+        function setupDependentSelects() {
+            // الوحدات -> الدروس
+            document.getElementById('unitSelect').addEventListener('change', async function() {
+                const unitId = this.value;
+                const lessonSelect = document.getElementById('lessonSelect');
+                const mainTopicSelect = document.getElementById('mainTopicSelect');
+                const subTopicSelect = document.getElementById('subTopicSelect');
+                
+                // إعادة تعيين القوائم التابعة
+                lessonSelect.innerHTML = '<option value="">اختر الدرس</option>';
+                mainTopicSelect.innerHTML = '<option value="">اختر التصنيف الرئيسي</option>';
+                subTopicSelect.innerHTML = '<option value="">اختر التصنيف الفرعي</option>';
+                
+                lessonSelect.disabled = !unitId;
+                mainTopicSelect.disabled = true;
+                subTopicSelect.disabled = true;
+                
+                if (unitId) {
+                    try {
+                        const response = await fetch(`http://127.0.0.1:8000/api/units/${unitId}/lessons`, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            populateSelect('lessonSelect', data.lessons, 'اختر الدرس');
+                        }
+                    } catch (error) {
+                        console.error('خطأ في تحميل الدروس:', error);
+                        // Add sample lessons for testing
+                        const sampleLessons = [
+                            { id: 1, name: 'الجمع والطرح' },
+                            { id: 2, name: 'الضرب والقسمة' }
+                        ];
+                        populateSelect('lessonSelect', sampleLessons, 'اختر الدرس (بيانات تجريبية)');
+                    }
+                }
+            });
+
+            // الدروس -> التصنيفات الرئيسية
+            document.getElementById('lessonSelect').addEventListener('change', async function() {
+                const lessonId = this.value;
+                const mainTopicSelect = document.getElementById('mainTopicSelect');
+                const subTopicSelect = document.getElementById('subTopicSelect');
+                
+                mainTopicSelect.innerHTML = '<option value="">اختر التصنيف الرئيسي</option>';
+                subTopicSelect.innerHTML = '<option value="">اختر التصنيف الفرعي</option>';
+                
+                mainTopicSelect.disabled = !lessonId;
+                subTopicSelect.disabled = true;
+                
+                if (lessonId) {
+                    try {
+                        const response = await fetch(`http://127.0.0.1:8000/api/lessons/${lessonId}/main-topics`, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            populateSelect('mainTopicSelect', data.main_topics, 'اختر التصنيف الرئيسي');
+                        }
+                    } catch (error) {
+                        console.error('خطأ في تحميل التصنيفات الرئيسية:', error);
+                    }
+                }
+            });
+
+            // التصنيفات الرئيسية -> التصنيفات الفرعية
+            document.getElementById('mainTopicSelect').addEventListener('change', async function() {
+                const mainTopicId = this.value;
+                const subTopicSelect = document.getElementById('subTopicSelect');
+                
+                subTopicSelect.innerHTML = '<option value="">اختر التصنيف الفرعي</option>';
+                subTopicSelect.disabled = !mainTopicId;
+                
+                if (mainTopicId) {
+                    try {
+                        const response = await fetch(`http://127.0.0.1:8000/api/main-topics/${mainTopicId}/sub-topics`, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            populateSelect('subTopicSelect', data.sub_topics, 'اختر التصنيف الفرعي');
+                        }
+                    } catch (error) {
+                        console.error('خطأ في تحميل التصنيفات الفرعية:', error);
+                    }
+                }
+            });
+        }
+
+        // إعداد تقييم النجوم
+        function setupStarRating() {
+            const stars = document.querySelectorAll('.star');
+            const ratingText = document.getElementById('ratingText');
+            const ratingValue = document.getElementById('ratingValue');
+            
+            const ratingTexts = {
+                1: 'ضعيف',
+                2: 'مقبول', 
+                3: 'جيد',
+                4: 'جيد جداً',
+                5: 'ممتاز'
+            };
+
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    setRating(rating);
+                });
+
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    highlightStars(rating);
+                });
+            });
+
+            document.getElementById('starRating').addEventListener('mouseleave', function() {
+                highlightStars(currentRating);
+            });
+
+            function setRating(rating) {
+                currentRating = rating;
+                ratingValue.value = rating;
+                ratingText.textContent = ratingTexts[rating];
+                highlightStars(rating);
+            }
+
+            function highlightStars(rating) {
+                stars.forEach((star, index) => {
+                    star.classList.toggle('active', index < rating);
+                });
+            }
+        }
+
+        // معالج إرسال النموذج
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            if (isLoading) return;
+            
+            // التحقق من صحة البيانات
+            if (!validateForm()) return;
+            
+            setLoading(true);
+            hideMessages();
+            
+            try {
+                const formData = new FormData();
+                
+                // إضافة البيانات النصية
+                formData.append('text', document.getElementById('questionText').value.trim());
+                formData.append('unit_id', document.getElementById('unitSelect').value);
+                formData.append('lesson_id', document.getElementById('lessonSelect').value);
+                formData.append('rating', document.getElementById('ratingValue').value);
+                formData.append('user_id', '1');
+                
+                // إضافة البيانات الاختيارية
+                const mainTopicId = document.getElementById('mainTopicSelect').value;
+                const subTopicId = document.getElementById('subTopicSelect').value;
+                const comment = document.getElementById('questionComment').value.trim();
+                
+                if (mainTopicId) formData.append('main_topic_id', mainTopicId);
+                if (subTopicId) formData.append('sub_topic_id', subTopicId);
+                if (comment) formData.append('creator_comment', comment);
+                
+                // إضافة صورة السؤال إذا تم اختيارها
+                if (selectedImageFile) {
+                    formData.append('image', selectedImageFile);
+                }
+                
+                // إضافة صورة الإجابة إذا تم اختيارها
+                if (selectedAnswerFile) {
+                    formData.append('answer', selectedAnswerFile);
+                }
+                
+                const response = await fetch('http://127.0.0.1:8000/api/questions', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                        // لا نضيف Content-Type هنا لأن FormData يحددها تلقائياً
+                    },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('✅ تم إنشاء السؤال بنجاح!');
+                    resetForm();
+                } else {
+                    showError(result.message || 'حدث خطأ أثناء إنشاء السؤال');
+                }
+                
+            } catch (error) {
+                console.error('خطأ:', error);
+                showError('خطأ في الاتصال بالخادم');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // التحقق من صحة النموذج
+        function validateForm() {
+            const questionText = document.getElementById('questionText').value.trim();
+            const unitId = document.getElementById('unitSelect').value;
+            const lessonId = document.getElementById('lessonSelect').value;
+            const rating = document.getElementById('ratingValue').value;
+            
+            // Check if both text and image are missing
+            if (!questionText && !selectedImageFile) {
+                showError('يرجى كتابة نص السؤال أو رفع صورة على الأقل');
+                return false;
+            }
+            
+            if (!unitId) {
+                showError('يرجى اختيار الوحدة');
+                return false;
+            }
+            
+            if (!lessonId) {
+                showError('يرجى اختيار الدرس');
+                return false;
+            }
+            
+            if (!rating) {
+                showError('يرجى تقييم السؤال');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // عرض رسالة النجاح
+        function showSuccess(message) {
+            const successElement = document.getElementById('successMessage');
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            
+            // التمرير إلى أعلى الصفحة
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // عرض رسالة الخطأ
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            
+            // التمرير إلى أعلى الصفحة
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // إخفاء الرسائل
+        function hideMessages() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // تعيين حالة التحميل
+        function setLoading(loading) {
+            isLoading = loading;
+            document.getElementById('loadingIndicator').style.display = loading ? 'block' : 'none';
+            document.getElementById('submitButton').disabled = loading;
+            
+            if (loading) {
+                document.getElementById('submitButton').textContent = 'جاري الإنشاء...';
+            } else {
+                document.getElementById('submitButton').textContent = '✅ إنشاء السؤال';
+            }
+        }
+
+        // إعادة تعيين النموذج
+        function resetForm() {
+            document.getElementById('questionForm').reset();
+            
+            // إعادة تعيين التقييم
+            currentRating = 0;
+            document.getElementById('ratingValue').value = '';
+            document.getElementById('ratingText').textContent = 'لم يتم التقييم';
+            document.querySelectorAll('.star').forEach(star => {
+                star.classList.remove('active');
+            });
+            
+            // إعادة تعيين الصور
+            removeImage();
+            removeAnswer();
+            
+            // إعادة تعيين القوائم المترابطة
+            document.getElementById('lessonSelect').disabled = true;
+            document.getElementById('mainTopicSelect').disabled = true;
+            document.getElementById('subTopicSelect').disabled = true;
+            
+            document.getElementById('lessonSelect').innerHTML = '<option value="">اختر الدرس</option>';
+            document.getElementById('mainTopicSelect').innerHTML = '<option value="">اختر التصنيف الرئيسي</option>';
+            document.getElementById('subTopicSelect').innerHTML = '<option value="">اختر التصنيف الفرعي</option>';
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

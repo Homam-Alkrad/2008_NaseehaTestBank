@@ -1,0 +1,285 @@
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            border: 2px solid #6a71d8;
+            box-shadow: 0 20px 60px rgba(106, 113, 216, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6a71d8;
+            background: white;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #6a71d8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            background: #5a61c8;
+            transform: translateY(-2px);
+        }
+
+        .register-link {
+            color: #6a71d8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            color: #6a71d8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>تسجيل الدخول</h1>
+        <p class="subtitle">مرحباً بعودتك إلى نصيحة التعليمي</p>
+
+        <div id="message" class="message"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">اسم المستخدم</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="login-btn">
+                <span id="btnText">تسجيل الدخول</span>
+                <span id="loading" class="loading">جاري التحميل...</span>
+            </button>
+        </form>
+    </div>
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('message');
+            const btnText = document.getElementById('btnText');
+            const loading = document.getElementById('loading');
+
+            // إظهار التحميل
+            btnText.style.display = 'none';
+            loading.style.display = 'inline';
+            messageDiv.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log('نجح تسجيل الدخول، البيانات:', data.user);
+
+                    // حفظ بيانات المستخدم مع التحقق
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+
+                    // التحقق من الحفظ
+                    const savedData = sessionStorage.getItem('user');
+                    console.log('البيانات المحفوظة:', savedData);
+
+                    if (!savedData) {
+                        throw new Error('فشل في حفظ بيانات المستخدم');
+                    }
+
+                    // إظهار رسالة نجاح
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = data.message + ' - جاري التوجيه...';
+                    messageDiv.style.display = 'block';
+
+                    // تحديد الصفحة حسب دور المستخدم
+                    let redirectPage;
+                    if (data.user.role === 'Admin') {
+                        redirectPage = '/dashboard.html';
+                    } else if (data.user.role === 'User') {
+                        redirectPage = '/user-page.html';
+                    } else {
+                        // fallback للأدوار غير المعروفة
+                        redirectPage = '/user-page.html';
+                    }
+
+                    // الانتقال للصفحة المناسبة مع تأخير
+                    setTimeout(() => {
+                        console.log(`جاري الانتقال إلى ${redirectPage} للمستخدم ${data.user.role}...`);
+                        // إضافة معرف للتأكد من نجاح تسجيل الدخول
+                        sessionStorage.setItem('loginSuccess', 'true');
+                        window.location.href = redirectPage;
+                    }, 1500);
+                } else {
+                    // إظهار رسالة خطأ
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.message;
+                    messageDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('خطأ في تسجيل الدخول:', error);
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'حدث خطأ في الاتصال بالخادم: ' + error.message;
+                messageDiv.style.display = 'block';
+            } finally {
+                // إخفاء التحميل
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        });
+
+        // التحقق إذا كان المستخدم مسجل دخول بالفعل
+        document.addEventListener('DOMContentLoaded', function () {
+            const userData = sessionStorage.getItem('user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    if (user.name && user.role) {
+                        console.log('المستخدم مسجل دخول بالفعل');
+
+                        // توجيه المستخدم حسب دوره
+                        // توجيه المستخدم حسب دوره
+                        if (user.role === 'Admin') {
+                            window.location.href = 'dashboard.html'; // استخدم / بدل \
+                        } else if (user.role === 'User') {
+                            window.location.href = 'user-page.html';
+                        } else {
+                            // fallback للأدوار غير المعروفة
+                            window.location.href = 'user-page.html';
+                        }
+
+                    }
+                } catch (error) {
+                    console.log('بيانات مستخدم تالفة، سيتم حذفها');
+                    sessionStorage.removeItem('user');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

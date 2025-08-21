@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 20px;
+            border: 2px solid #6a71d8;
+            box-shadow: 0 20px 60px rgba(106, 113, 216, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #6a71d8;
+            background: white;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 15px;
+            background: #6a71d8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .register-btn:hover {
+            background: #5a61c8;
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            color: #6a71d8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            color: #6a71d8;
+        }
+
+        .errors {
+            text-align: right;
+            color: #721c24;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>إنشاء حساب جديد</h1>
+       
+        <div id="message" class="message"></div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">الاسم الكامل</label>
+                <input type="text" id="name" name="name" required>
+                <div id="nameError" class="errors"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">اسم المستخدم</label>
+                <input type="text" id="username" name="username" required>
+                <div id="usernameError" class="errors"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" name="password" required minlength="6">
+                <div id="passwordError" class="errors"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="role">نوع الحساب</label>
+                <select id="role" name="role" required>
+                    <option value="User">مستخدم عادي</option>
+                    <option value="Admin">مدير</option>
+                </select>
+                <div id="roleError" class="errors"></div>
+            </div>
+            
+            <button type="submit" class="register-btn">
+                <span id="btnText">إنشاء الحساب</span>
+                <span id="loading" class="loading">جاري التحميل...</span>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // إزالة رسائل الخطأ السابقة
+            document.querySelectorAll('.errors').forEach(error => error.textContent = '');
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // إضافة الإيميل تلقائياً
+            data.email = data.username + '@gmail.com';
+            
+            const messageDiv = document.getElementById('message');
+            const btnText = document.getElementById('btnText');
+            const loading = document.getElementById('loading');
+            
+            // إظهار التحميل
+            btnText.style.display = 'none';
+            loading.style.display = 'inline';
+            messageDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // إظهار رسالة نجاح
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = result.message;
+                    messageDiv.style.display = 'block';
+                    
+                    // مسح النموذج
+                    document.getElementById('registerForm').reset();
+                    
+                    // الانتقال لصفحة تسجيل الدخول
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    // إظهار رسالة خطأ عامة
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = result.message;
+                    messageDiv.style.display = 'block';
+                    
+                    // إظهار أخطاء الحقول المحددة
+                    if (result.errors) {
+                        Object.keys(result.errors).forEach(field => {
+                            const errorDiv = document.getElementById(field + 'Error');
+                            if (errorDiv) {
+                                errorDiv.textContent = result.errors[field][0];
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'حدث خطأ في الاتصال بالخادم';
+                messageDiv.style.display = 'block';
+            } finally {
+                // إخفاء التحميل
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

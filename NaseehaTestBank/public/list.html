@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة الأسئلة - نصيحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6a71d8 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 8px 32px rgba(106, 113, 216, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .site-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255, 82, 82, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6a71d8, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.05);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #6a71d8;
+            background: rgba(106, 113, 216, 0.1);
+        }
+
+        .nav-link.active::before {
+            transform: scaleX(1);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* إحصائيات */
+        .stats-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            padding: 30px 40px;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #6a71d8;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* بطاقات الوحدات المحدثة */
+        .units-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .units-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px 40px;
+            border-bottom: 1px solid rgba(106, 113, 216, 0.1);
+        }
+
+        .units-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .units-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .units-grid {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .unit-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .unit-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+        }
+
+        .unit-card.expanded {
+            border-color: #10b981;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+        }
+
+        .unit-content {
+            padding: 25px 30px;
+        }
+
+        .unit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .unit-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .unit-icon {
+            font-size: 24px;
+            color: #10b981;
+        }
+
+        .expand-arrow {
+            font-size: 18px;
+            color: #10b981;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .unit-card.expanded .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .unit-stats {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .unit-stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .unit-stat span:first-child {
+            font-size: 16px;
+        }
+
+        .unit-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* قائمة الدروس المحدثة */
+        .lessons-list {
+            margin-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 20px;
+            display: none;
+        }
+
+        .lessons-list.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lesson-item {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lesson-item:hover {
+            background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
+            border-color: #10b981;
+            transform: translateX(8px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .lesson-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lesson-icon {
+            font-size: 18px;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .lesson-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .lesson-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        .lesson-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Average Rating Display */
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 193, 7, 0.1);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .rating-star {
+            color: #ffc107;
+            font-size: 14px;
+        }
+
+        .rating-number {
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        /* Loading */
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6a71d8;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6a71d8;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #fecaca;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .navbar-container {
+                padding: 0 20px;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .page-header,
+            .stats-container,
+            .units-grid {
+                padding: 25px 20px;
+            }
+
+            .units-grid {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .unit-stats {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .lesson-stats {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-end;
+            }
+
+            .unit-content {
+                padding: 20px;
+            }
+        }
+
+        /* تأثيرات إضافية */
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .offline .header {
+            filter: grayscale(50%);
+        }
+
+        .offline .units-container {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">نت</div>
+                <div class="site-title">نصيحة التعليمي</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-role" id="userRole">مستخدم</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="Dashboard.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="users.html" class="nav-link">إدارة المستخدمين</a>
+                </li>
+                <li class="nav-item">
+                    <a href="units.html" class="nav-link">إدارة الوحدات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="lessons.html" class="nav-link">إدارة الدروس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="main-topics.html" class="nav-link">التصنيفات الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="sub-topics.html" class="nav-link">التصنيفات الفرعية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="Create_Question.html" class="nav-link">إنشاء سؤال</a>
+                </li>
+                <li class="nav-item">
+                    <a href="list.html" class="nav-link active">عرض الأسئلة</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- إحصائيات عامة -->
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalQuestions">-</div>
+                    <div class="stat-label">إجمالي الأسئلة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="averageRating">-</div>
+                    <div class="stat-label">متوسط التقييم العام</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="highRatedCount">-</div>
+                    <div class="stat-label">عالية التقييم</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalUnits">-</div>
+                    <div class="stat-label">الوحدات التعليمية</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="messagesContainer"></div>
+
+        <!-- الوحدات -->
+        <div class="units-container">
+            <div class="units-header">
+                <h2 class="units-title">الوحدات التعليمية</h2>
+                <p class="units-subtitle" id="unitsSubtitle">استعرض الوحدات والدروس والأسئلة المتاحة</p>
+            </div>
+
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading-spinner"></div>
+                <p>جاري تحميل البيانات...</p>
+            </div>
+
+            <div class="units-grid" id="unitsGrid" style="display: none;">
+                <!-- سيتم ملؤها بالبيانات -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+const API_URL = 'http://127.0.0.1:8000/api';
+        let unitsData = [];
+        let questionsStats = {};
+
+        // تحميل البيانات عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadData();
+        });
+
+        // التحقق من صحة المصادقة
+        function checkAuth() {
+            // تعطيل مؤقت للاختبار المحلي
+            if (window.location.protocol === 'file:') {
+                currentUser = { id: 1, name: 'مستخدم تجريبي', role: 'User' };
+                updateUserInfo();
+                return;
+            }
+
+            const userData = sessionStorage.getItem('user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserInfo();
+            } catch (error) {
+                console.error('خطأ في قراءة بيانات المستخدم:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        // تحديث معلومات المستخدم في الواجهة
+        function updateUserInfo() {
+            document.getElementById('userRole').textContent = currentUser.role === 'Admin' ? 'مدير' : 'مستخدم';
+        }
+
+        // تحميل جميع البيانات
+        async function loadData() {
+            showLoading(true);
+            
+            try {
+                await Promise.all([
+                    loadUnitsWithStats(),
+                    loadGeneralStats()
+                ]);
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                showError('خطأ في تحميل البيانات من الخادم');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // تحميل الوحدات مع الإحصائيات
+        async function loadUnitsWithStats() {
+            try {
+                const response = await fetch(`${API_URL}/units`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // تحميل الإحصائيات لكل وحدة
+                    const unitsWithStats = await Promise.all(
+                        data.units.map(async (unit) => {
+                            try {
+                                // جلب إحصائيات الوحدة الأساسية
+                                const statsResponse = await fetch(`${API_URL}/questions/unit/${unit.id}`);
+                                const statsData = await statsResponse.json();
+                                
+                                // جلب دروس الوحدة
+                                const lessonsResponse = await fetch(`${API_URL}/units/${unit.id}/lessons`);
+                                const lessonsData = await lessonsResponse.json();
+                                
+                                // حساب متوسط التقييم للوحدة مع الـ average_rating الصحيح
+                                let averageRating = 0;
+                                let totalQuestions = 0;
+                                
+                                if (statsData.success && statsData.questions) {
+                                    totalQuestions = statsData.questions.length;
+                                    
+                                    // جلب التقييم الصحيح لكل سؤال
+                                    const questionsWithRatings = await Promise.all(
+                                        statsData.questions.map(async (question) => {
+                                            try {
+                                                const ratingResponse = await fetch(`${API_URL}/questions/${question.id}/ratings`);
+                                                const ratingData = await ratingResponse.json();
+                                                
+                                                return {
+                                                    ...question,
+                                                    average_rating: parseFloat(ratingData.average_rating || question.rating || 0),
+                                                    rating_count: parseInt(ratingData.rating_count || 0)
+                                                };
+                                            } catch (error) {
+                                                console.error(`خطأ في جلب تقييم السؤال ${question.id}:`, error);
+                                                return {
+                                                    ...question,
+                                                    average_rating: parseFloat(question.rating || 0),
+                                                    rating_count: 0
+                                                };
+                                            }
+                                        })
+                                    );
+                                    
+                                    const ratings = questionsWithRatings
+                                        .map(q => parseFloat(q.average_rating || 0))
+                                        .filter(r => r > 0);
+                                    
+                                    if (ratings.length > 0) {
+                                        averageRating = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+                                    }
+                                }
+                                
+                                return {
+                                    ...unit,
+                                    lessons_count: lessonsData.success ? lessonsData.lessons.length : 0,
+                                    questions_count: totalQuestions,
+                                    average_rating: averageRating
+                                };
+                            } catch (error) {
+                                console.error(`خطأ في تحميل إحصائيات الوحدة ${unit.id}:`, error);
+                                return {
+                                    ...unit,
+                                    lessons_count: 0,
+                                    questions_count: 0,
+                                    average_rating: 0
+                                };
+                            }
+                        })
+                    );
+                    
+                    unitsData = unitsWithStats;
+                    displayUnits();
+                } else {
+                    throw new Error('فشل في تحميل الوحدات');
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الوحدات:', error);
+                throw error;
+            }
+        }
+
+        // تحميل الإحصائيات العامة
+        async function loadGeneralStats() {
+            try {
+                const questionsResponse = await fetch(`${API_URL}/questions`);
+                const questionsData = await questionsResponse.json();
+                
+                const unitsResponse = await fetch(`${API_URL}/units`);
+                const unitsData = await unitsResponse.json();
+                
+                const ratingStatsResponse = await fetch(`${API_URL}/questions/rating-stats`);
+                const ratingStatsData = await ratingStatsResponse.json();
+                
+                let totalQuestions = 0;
+                let averageRating = 0;
+                let highRatedCount = 0;
+                let totalUnits = 0;
+                
+                if (questionsData.success) {
+                    totalQuestions = questionsData.questions.length;
+                    
+                    // حساب متوسط التقييم العام مع الـ average_rating الصحيح
+                    const questionsWithRatings = await Promise.all(
+                        questionsData.questions.map(async (question) => {
+                            try {
+                                const ratingResponse = await fetch(`${API_URL}/questions/${question.id}/ratings`);
+                                const ratingData = await ratingResponse.json();
+                                
+                                return {
+                                    ...question,
+                                    average_rating: parseFloat(ratingData.average_rating || question.rating || 0),
+                                    rating_count: parseInt(ratingData.rating_count || 0)
+                                };
+                            } catch (error) {
+                                return {
+                                    ...question,
+                                    average_rating: parseFloat(question.rating || 0),
+                                    rating_count: 0
+                                };
+                            }
+                        })
+                    );
+                    
+                    const ratings = questionsWithRatings
+                        .map(q => parseFloat(q.average_rating || 0))
+                        .filter(r => r > 0);
+                    
+                    if (ratings.length > 0) {
+                        averageRating = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+                    }
+                    
+                    // عد الأسئلة عالية التقييم (4 نجوم فأكثر)
+                    highRatedCount = questionsWithRatings.filter(q => {
+                        const rating = parseFloat(q.average_rating || 0);
+                        return rating >= 4;
+                    }).length;
+                }
+                
+                if (unitsData.success) {
+                    totalUnits = unitsData.units.length;
+                }
+                
+                // استخدام بيانات إحصائيات التقييم إذا كانت متاحة
+                if (ratingStatsData.success) {
+                    averageRating = parseFloat(ratingStatsData.average_rating || averageRating);
+                    totalQuestions = parseInt(ratingStatsData.total_questions || totalQuestions);
+                }
+                
+                updateGeneralStats({
+                    counts: {
+                        total_questions: totalQuestions,
+                        total_units: totalUnits
+                    },
+                    ratings: {
+                        average_rating: averageRating,
+                        highest_rated_count: highRatedCount
+                    }
+                });
+                
+            } catch (error) {
+                console.error('خطأ في تحميل الإحصائيات:', error);
+                // إحصائيات افتراضية
+                updateGeneralStats({
+                    counts: {
+                        total_questions: 0,
+                        total_units: 0
+                    },
+                    ratings: {
+                        average_rating: 0,
+                        highest_rated_count: 0
+                    }
+                });
+            }
+        }
+
+        // تحديث الإحصائيات العامة
+        function updateGeneralStats(stats) {
+            document.getElementById('totalQuestions').textContent = stats.counts.total_questions || 0;
+            document.getElementById('averageRating').textContent = (stats.ratings.average_rating || 0).toFixed(1);
+            document.getElementById('highRatedCount').textContent = stats.ratings.highest_rated_count || 0;
+            document.getElementById('totalUnits').textContent = stats.counts.total_units || 0;
+        }
+
+        // عرض الوحدات
+        function displayUnits() {
+            const grid = document.getElementById('unitsGrid');
+            const subtitle = document.getElementById('unitsSubtitle');
+            
+            if (!unitsData || unitsData.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">لا توجد وحدات متاحة</p>';
+                grid.style.display = 'block';
+                return;
+            }
+
+            // تحديث العنوان الفرعي
+            const totalLessons = unitsData.reduce((sum, unit) => sum + (unit.lessons_count || 0), 0);
+            const totalQuestions = unitsData.reduce((sum, unit) => sum + (unit.questions_count || 0), 0);
+            subtitle.textContent = `${unitsData.length} وحدة • ${totalLessons} درس • ${totalQuestions} سؤال`;
+
+            grid.innerHTML = unitsData.map(unit => createUnitCard(unit)).join('');
+            grid.style.display = 'flex';
+        }
+
+        // إنشاء بطاقة الوحدة
+        function createUnitCard(unit) {
+            const lessonsCount = unit.lessons_count || 0;
+            const questionsCount = unit.questions_count || 0;
+            const averageRating = parseFloat(unit.average_rating || 0);
+            
+            return `
+                <div class="unit-card" onclick="toggleUnit(${unit.id})" id="unit-${unit.id}">
+                    <div class="unit-content">
+                        <div class="unit-header">
+                            <div class="unit-title">
+                                <span class="unit-icon">📚</span>
+                                ${unit.name}
+                            </div>
+                            <span class="expand-arrow">▼</span>
+                        </div>
+                        
+                        <div class="unit-stats">
+                            <div class="unit-stat">
+                                <span>📖</span>
+                                <span>${lessonsCount} درس</span>
+                            </div>
+                            <div class="unit-stat">
+                                <span>❓</span>
+                                <span>${questionsCount} سؤال</span>
+                            </div>
+                            ${averageRating > 0 ? `
+                                <div class="rating-display">
+                                    <div class="rating-stars">
+                                        ${generateStarDisplay(averageRating)}
+                                    </div>
+                                    <span class="rating-number">${averageRating.toFixed(1)}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="unit-description">
+                            ${unit.description || 'لا يوجد وصف متاح لهذه الوحدة'}
+                        </div>
+                        
+                        <div class="lessons-list" id="lessons-${unit.id}">
+                            <div style="text-align: center; padding: 20px; color: #666;">
+                                جاري تحميل الدروس...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // توليد عرض النجوم
+        function generateStarDisplay(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 1; i <= 5; i++) {
+                if (i <= fullStars) {
+                    stars += '<span class="rating-star">★</span>';
+                } else if (i === fullStars + 1 && hasHalfStar) {
+                    stars += '<span class="rating-star">☆</span>';
+                } else {
+                    stars += '<span class="rating-star" style="color: #ddd;">★</span>';
+                }
+            }
+            return stars;
+        }
+
+        // توسيع/طي الوحدة
+        async function toggleUnit(unitId) {
+            const unitCard = document.getElementById(`unit-${unitId}`);
+            const lessonsList = document.getElementById(`lessons-${unitId}`);
+            
+            // إذا كانت مفتوحة، أغلقها
+            if (unitCard.classList.contains('expanded')) {
+                unitCard.classList.remove('expanded');
+                lessonsList.classList.remove('show');
+                return;
+            }
+            
+            // إغلاق جميع الوحدات الأخرى
+            document.querySelectorAll('.unit-card.expanded').forEach(card => {
+                card.classList.remove('expanded');
+                card.querySelector('.lessons-list').classList.remove('show');
+            });
+            
+            // فتح الوحدة الحالية
+            unitCard.classList.add('expanded');
+            lessonsList.classList.add('show');
+            
+            // تحميل الدروس
+            await loadLessonsWithStats(unitId);
+        }
+
+        // تحميل دروس الوحدة مع الإحصائيات
+        async function loadLessonsWithStats(unitId) {
+            const lessonsList = document.getElementById(`lessons-${unitId}`);
+            
+            try {
+                const response = await fetch(`${API_URL}/units/${unitId}/lessons`);
+                const data = await response.json();
+                
+                if (data.success && data.lessons.length > 0) {
+                    // تحميل الإحصائيات لكل درس
+                    const lessonsWithStats = await Promise.all(
+                        data.lessons.map(async (lesson) => {
+                            try {
+                                // جلب أسئلة الدرس
+                                const questionsResponse = await fetch(`${API_URL}/questions/lesson/${lesson.id}`);
+                                const questionsData = await questionsResponse.json();
+                                
+                                // جلب التصنيفات الرئيسية للدرس
+                                const topicsResponse = await fetch(`${API_URL}/lessons/${lesson.id}/main-topics`);
+                                const topicsData = await topicsResponse.json();
+                                
+                                let averageRating = 0;
+                                let questionsCount = 0;
+                                
+                                if (questionsData.success && questionsData.questions) {
+                                    questionsCount = questionsData.questions.length;
+                                    
+                                    // جلب التقييم الصحيح لكل سؤال في الدرس
+                                    const questionsWithRatings = await Promise.all(
+                                        questionsData.questions.map(async (question) => {
+                                            try {
+                                                const ratingResponse = await fetch(`${API_URL}/questions/${question.id}/ratings`);
+                                                const ratingData = await ratingResponse.json();
+                                                
+                                                return {
+                                                    ...question,
+                                                    average_rating: parseFloat(ratingData.average_rating || question.rating || 0),
+                                                    rating_count: parseInt(ratingData.rating_count || 0)
+                                                };
+                                            } catch (error) {
+                                                return {
+                                                    ...question,
+                                                    average_rating: parseFloat(question.rating || 0),
+                                                    rating_count: 0
+                                                };
+                                            }
+                                        })
+                                    );
+                                    
+                                    const ratings = questionsWithRatings
+                                        .map(q => parseFloat(q.average_rating || 0))
+                                        .filter(r => r > 0);
+                                    
+                                    if (ratings.length > 0) {
+                                        averageRating = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+                                    }
+                                }
+                                
+                                return {
+                                    ...lesson,
+                                    main_topics_count: topicsData.success ? topicsData.main_topics.length : 0,
+                                    questions_count: questionsCount,
+                                    average_rating: averageRating
+                                };
+                            } catch (error) {
+                                console.error(`خطأ في تحميل إحصائيات الدرس ${lesson.id}:`, error);
+                                return {
+                                    ...lesson,
+                                    main_topics_count: 0,
+                                    questions_count: 0,
+                                    average_rating: 0
+                                };
+                            }
+                        })
+                    );
+                    
+                    lessonsList.innerHTML = lessonsWithStats.map(lesson => createLessonItem(lesson, unitId)).join('');
+                } else {
+                    lessonsList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">لا توجد دروس في هذه الوحدة</p>';
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الدروس:', error);
+                lessonsList.innerHTML = '<p style="text-align: center; color: #dc2626; padding: 20px;">خطأ في تحميل الدروس</p>';
+            }
+        }
+
+        // إنشاء عنصر الدرس
+        function createLessonItem(lesson, unitId) {
+            const mainTopicsCount = lesson.main_topics_count || 0;
+            const questionsCount = lesson.questions_count || 0;
+            const averageRating = parseFloat(lesson.average_rating || 0);
+            
+            return `
+                <div class="lesson-item" onclick="viewQuestions(${unitId}, ${lesson.id}, '${lesson.name}')">
+                    <div class="lesson-info">
+                        <span class="lesson-icon">📖</span>
+                        <span class="lesson-name">${lesson.name}</span>
+                    </div>
+                    <div class="lesson-stats">
+                        <div class="lesson-stat">
+                            <span>🏷️</span>
+                            <span>${mainTopicsCount} تصنيف</span>
+                        </div>
+                        <div class="lesson-stat">
+                            <span>❓</span>
+                            <span>${questionsCount} سؤال</span>
+                        </div>
+                        ${averageRating > 0 ? `
+                            <div class="rating-display">
+                                <div class="rating-stars">
+                                    ${generateStarDisplay(averageRating)}
+                                </div>
+                                <span class="rating-number">${averageRating.toFixed(1)}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // عرض أسئلة الدرس
+        function viewQuestions(unitId, lessonId, lessonName) {
+            // إنشاء URL للصفحة الجديدة مع المعاملات
+            const params = new URLSearchParams({
+                unit: unitId,
+                lesson: lessonId,
+                lessonName: lessonName
+            });
+            
+            window.location.href = `questions-view.html?${params.toString()}`;
+        }
+
+        // إظهار/إخفاء التحميل
+        function showLoading(show) {
+            document.getElementById('loadingContainer').style.display = show ? 'block' : 'none';
+            document.getElementById('unitsGrid').style.display = show ? 'none' : 'flex';
+        }
+
+        // إظهار رسائل الخطأ
+        function showError(message) {
+            showMessage(message, 'error');
+        }
+
+        // إظهار رسائل النجاح
+        function showSuccess(message) {
+            showMessage(message, 'success');
+        }
+
+        // إظهار الرسائل
+        function showMessage(message, type) {
+            const container = document.getElementById('messagesContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${type}-message`;
+            messageDiv.textContent = message;
+            
+            container.innerHTML = '';
+            container.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('loginSuccess');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // إضافة تأثيرات بصرية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثير الظهور المتدرج للبطاقات
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.unit-card');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                });
+            }, 500);
+        });
+
+        // إضافة إشعارات للمستخدم
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            `;
+            
+            switch(type) {
+                case 'success':
+                    notification.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    break;
+                case 'error':
+                    notification.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                    break;
+                case 'warning':
+                    notification.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+                    break;
+                default:
+                    notification.style.background = 'linear-gradient(135deg, #6366f1, #4f46e5)';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // معالجة الأخطاء العامة
+        window.addEventListener('error', function(e) {
+            console.error('خطأ JavaScript:', e.error);
+            showNotification('حدث خطأ غير متوقع في النظام', 'error');
+        });
+
+        // معالجة الأخطاء في الشبكة
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('خطأ في الشبكة:', e.reason);
+            showNotification('خطأ في الاتصال بالخادم', 'error');
+        });
+
+        // إضافة مؤشر حالة الاتصال
+        function updateConnectionStatus() {
+            if (navigator.onLine) {
+                document.body.classList.remove('offline');
+            } else {
+                document.body.classList.add('offline');
+                showNotification('لا يوجد اتصال بالإنترنت', 'warning');
+            }
+        }
+
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        updateConnectionStatus();
+
+        // إضافة اختصارات لوحة المفاتيح
+        document.addEventListener('keydown', function(e) {
+            // F5 لتحديث البيانات
+            if (e.key === 'F5') {
+                e.preventDefault();
+                loadData();
+                showNotification('تم تحديث البيانات', 'success');
+            }
+            
+            // Escape لإغلاق جميع الوحدات المفتوحة
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.unit-card.expanded').forEach(card => {
+                    card.classList.remove('expanded');
+                    card.querySelector('.lessons-list').classList.remove('show');
+                });
+            }
+        });
+
+        // إضافة تأثيرات تفاعلية للبطاقات
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثير النقر على البطاقات
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.unit-card')) {
+                    const card = e.target.closest('.unit-card');
+                    
+                    // تأثير التموج عند النقر
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(16, 185, 129, 0.3);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    const rect = card.getBoundingClientRect();
+                    const size = Math.max(rect.height, rect.width);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    
+                    card.style.position = 'relative';
+                    card.style.overflow = 'hidden';
+                    card.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                }
+            });
+        });
+
+        // تحسين تجربة اللمس على الأجهزة المحمولة
+        if ('ontouchstart' in window) {
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.closest('.unit-card, .lesson-item')) {
+                    const element = e.target.closest('.unit-card, .lesson-item');
+                    element.style.transform = 'scale(0.98)';
+                }
+            });
+            
+            document.addEventListener('touchend', function(e) {
+                if (e.target.closest('.unit-card, .lesson-item')) {
+                    const element = e.target.closest('.unit-card, .lesson-item');
+                    element.style.transform = 'scale(1)';
+                }
+            });
+        }
+
+        console.log('✅ تم تحميل صفحة قائمة الأسئلة بنجاح مع عرض التقييمات');
+    </script>
+</body>
+
+</html>
